@@ -14,5 +14,7 @@ module.exports = {
       'warn',
       { allowConstantExport: true },
     ],
+    // 当 useEffect 的依赖为 [] 时不报 warn
+    'react-hooks/exhaustive-deps': 0
   },
 }
