@@ -1,33 +1,55 @@
 import './App.css'
 
+import { useMutation, useQuery } from '@apollo/client'
 import { useState } from 'react'
 
-import viteLogo from '/vite.svg'
+import { FIND, UPDATE } from './graphql/demo'
 
-import reactLogo from './assets/react.svg'
+const App = () => {
+  const { loading, data } = useQuery(FIND, {
+    variables: {
+      id: 'cea67d16-df13-4320-bdf2-5d1e56363191',
+    },
+  })
 
-function App() {
-  const [count, setCount] = useState(0)
+  const [params, setParams] = useState({})
+
+  const [update] = useMutation(UPDATE)
+
+  const onChange = (key: string, value: string) => {
+    setParams({
+      ...params,
+      [key]: value,
+    })
+  }
+
+  const onUpdate = () => {
+    update({
+      variables: {
+        id: 'cea67d16-df13-4320-bdf2-5d1e56363191',
+        params,
+      },
+    })
+  }
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank" rel="noreferrer">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank" rel="noreferrer">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount(count => count + 1)}>count is {count}</button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">Click on the Vite and React logos to learn more</p>
-    </>
+    <div>
+      <p>data: {JSON.stringify(data)}</p>
+      <p>loading: {`${loading}`}</p>
+
+      <p>
+        account: <input onChange={e => onChange('account', e.target.value)} />
+      </p>
+      <p>
+        username: <input onChange={e => onChange('username', e.target.value)} />
+      </p>
+      <p>
+        desc: <input onChange={e => onChange('desc', e.target.value)} />
+      </p>
+      <p>
+        <button onClick={onUpdate}>修改</button>
+      </p>
+    </div>
   )
 }
 
