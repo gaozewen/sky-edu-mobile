@@ -2,10 +2,10 @@ import { useCallback, useState } from "react";
 import useMount from "./useMount";
 
 interface IOptions {
-  manual: boolean;
-  onSuccess: (res: unknown) => void;
-  onError: (err: unknown) => void;
-  onFinally: () => void;
+  manual?: boolean;
+  onSuccess?: (res: unknown) => void;
+  onError?: (err: unknown) => void;
+  onFinally?: () => void;
 }
 
 /**
@@ -15,7 +15,7 @@ interface IOptions {
  * @param params
  * @returns
  */
-const useRequest = (service: () => Promise<unknown>, options: IOptions) => {
+const useRequest = (service: () => Promise<unknown>, options?: IOptions) => {
   const [data, setData] = useState<unknown>();
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -25,18 +25,20 @@ const useRequest = (service: () => Promise<unknown>, options: IOptions) => {
       .then((res) => {
         setData(res);
         setLoading(false);
-        options?.onSuccess(res);
+        options?.onSuccess && options.onSuccess(res);
       })
       .catch((error) => {
         setLoading(false);
-        options?.onError(error);
+        options?.onError && options?.onError(error);
       })
-      .finally(options?.onFinally);
+      .finally(() => {
+        options?.onFinally && options?.onFinally()
+      });
   }, [service]);
 
   useMount(() => {
     // 非手动才自动执行
-    if (!options.manual) {
+    if (!options ||!options?.manual) {
       handler();
     }
   });
