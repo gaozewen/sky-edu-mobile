@@ -1,5 +1,6 @@
-import { useCallback, useState } from "react";
-import useMount from "./useMount";
+import { useCallback, useState } from 'react';
+
+import useMount from './useMount';
 
 interface IOptions {
   manual?: boolean;
@@ -25,20 +26,26 @@ const useRequest = (service: () => Promise<unknown>, options?: IOptions) => {
       .then((res) => {
         setData(res);
         setLoading(false);
-        options?.onSuccess && options.onSuccess(res);
+        if (options?.onSuccess) {
+          options.onSuccess(res);
+        }
       })
       .catch((error) => {
         setLoading(false);
-        options?.onError && options?.onError(error);
+        if (options?.onError) {
+          options.onError(error);
+        }
       })
       .finally(() => {
-        options?.onFinally && options?.onFinally()
+        if (options?.onFinally) {
+          options?.onFinally();
+        }
       });
-  }, [service]);
+  }, [service, options]);
 
   useMount(() => {
     // 非手动才自动执行
-    if (!options ||!options?.manual) {
+    if (!options || !options?.manual) {
       handler();
     }
   });
