@@ -1,12 +1,12 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useState } from 'react'
 
-import useMount from './useMount';
+import useMount from './useMount'
 
 interface IOptions {
-  manual?: boolean;
-  onSuccess?: (res: unknown) => void;
-  onError?: (err: unknown) => void;
-  onFinally?: () => void;
+  manual?: boolean
+  onSuccess?: (res: unknown) => void
+  onError?: (err: unknown) => void
+  onFinally?: () => void
 }
 
 /**
@@ -17,44 +17,44 @@ interface IOptions {
  * @returns
  */
 const useRequest = (service: () => Promise<unknown>, options?: IOptions) => {
-  const [data, setData] = useState<unknown>();
-  const [loading, setLoading] = useState<boolean>(false);
+  const [data, setData] = useState<unknown>()
+  const [loading, setLoading] = useState<boolean>(false)
 
   const handler = useCallback(() => {
-    setLoading(true);
+    setLoading(true)
     service()
-      .then((res) => {
-        setData(res);
-        setLoading(false);
+      .then(res => {
+        setData(res)
+        setLoading(false)
         if (options?.onSuccess) {
-          options.onSuccess(res);
+          options.onSuccess(res)
         }
       })
-      .catch((error) => {
-        setLoading(false);
+      .catch(error => {
+        setLoading(false)
         if (options?.onError) {
-          options.onError(error);
+          options.onError(error)
         }
       })
       .finally(() => {
         if (options?.onFinally) {
-          options?.onFinally();
+          options?.onFinally()
         }
-      });
-  }, [service, options]);
+      })
+  }, [service, options])
 
   useMount(() => {
     // 非手动才自动执行
     if (!options || !options?.manual) {
-      handler();
+      handler()
     }
-  });
+  })
 
   const run = () => {
-    handler();
-  };
+    handler()
+  }
 
-  return { loading, data, run };
-};
+  return { loading, data, run }
+}
 
-export default useRequest;
+export default useRequest

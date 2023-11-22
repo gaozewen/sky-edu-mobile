@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect } from 'react'
 
 /**
  * 组件加载时运行
@@ -6,8 +6,8 @@ import { useEffect } from 'react';
  */
 const useMount = (fn: () => void) => {
   useEffect(() => {
-    fn?.();
-  }, []);
-};
+    fn?.()
+  }, [])
+}
 
 export default useMount
