@@ -1,9 +1,8 @@
-import './App.css'
-
 import { useMutation, useQuery } from '@apollo/client'
 import { ImageUploader } from 'antd-mobile'
 import { useState } from 'react'
 
+import styles from './App.module.scss'
 import { FIND, UPDATE } from './graphql/demo'
 import { useUploadOSS } from './hooks/useUploadOSS'
 
@@ -37,23 +36,25 @@ const App = () => {
   }
 
   return (
-    <div>
+    <div className={styles.root}>
       <ImageUploader upload={uploadHandler} />
-      <p>data: {JSON.stringify(data)}</p>
-      <p>loading: {`${loading}`}</p>
+      <div className={styles.container}>
+        <p>data: {JSON.stringify(data)}</p>
+        <p>loading: {`${loading}`}</p>
 
-      <p>
-        account: <input onChange={e => onChange('account', e.target.value)} />
-      </p>
-      <p>
-        username: <input onChange={e => onChange('username', e.target.value)} />
-      </p>
-      <p>
-        desc: <input onChange={e => onChange('desc', e.target.value)} />
-      </p>
-      <p>
-        <button onClick={onUpdate}>修改</button>
-      </p>
+        <p className={styles.newForm}>
+          account: <input onChange={e => onChange('account', e.target.value)} />
+        </p>
+        <p>
+          username: <input onChange={e => onChange('username', e.target.value)} />
+        </p>
+        <p>
+          desc: <input onChange={e => onChange('desc', e.target.value)} />
+        </p>
+        <p>
+          <button onClick={onUpdate}>修改</button>
+        </p>
+      </div>
     </div>
   )
 }
