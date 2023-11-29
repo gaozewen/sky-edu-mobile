@@ -1,0 +1,25 @@
+.container {
+  padding: 20px;
+  .logo {
+    padding: 30px;
+    margin: 20px 0;
+    text-align: center;
+    img {
+      width: 80%;
+      margin: auto;
+    }
+  }
+
+  .bottom {
+    margin-top: 40px;
+    font-size: 14px;
+    text-align: center;
+    .link {
+      text-decoration: none;
+    }
+  }
+
+  .submit-button {
+    margin-top: 30px;
+  }
+}
