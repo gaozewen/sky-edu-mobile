@@ -21,7 +21,7 @@ const useAutoNavigate = (loadingUserData: boolean) => {
     if (loadingUserData) return
 
     // 已登陆
-    if (store.tel) {
+    if (store.id) {
       // 如果当前路由是登录页时，跳转 orgUrl 页，否则跳转主页
       if (isLoginRouterOrRegister(pathname)) {
         const orgUrlPathname = params.get('orgUrl')

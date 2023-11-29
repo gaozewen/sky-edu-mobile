@@ -1,4 +1,6 @@
 :root:root {
-  /* --primary-color: #00c6a8; */
   --adm-color-primary: #00c6a8;
+}
+:root {
+  --sky-bg-color: #f8f9fb;
 }

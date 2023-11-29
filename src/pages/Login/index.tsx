@@ -1,20 +1,62 @@
+import { useMutation } from '@apollo/client'
 import { Button, Form, Input } from 'antd-mobile'
 import { EyeInvisibleOutline, EyeOutline } from 'antd-mobile-icons'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 
+import { SUCCESS } from '@/constants/code'
 import { IMG } from '@/constants/image'
+import { STUDENT_LOGIN } from '@/graphql/student'
+import { useStudentContext } from '@/hooks/useStudentHooks'
 import { PN } from '@/router'
+import SkyToast from '@/utils/skyToast'
+import { setToken } from '@/utils/userToken'
 
 import styles from './index.module.scss'
+
+interface IValue {
+  account: string
+  password: string
+}
 
 /**
  * 登录页
  */
 const Login = () => {
   const [visible, setVisible] = useState(false)
+  const [studentLogin, { loading, client }] = useMutation(STUDENT_LOGIN)
+  const { store: studentStore } = useStudentContext()
 
-  const onLogin = () => {}
+  const onLogin = async (value: IValue) => {
+    const { account, password } = value
+    try {
+      const res = await studentLogin({
+        variables: {
+          params: {
+            account,
+            password,
+          },
+        },
+      })
+      const { code, message, data: token } = res.data.studentLogin
+      if (code === SUCCESS) {
+        await client.clearStore()
+        setToken(token, true)
+        // 更新用户信息 (为了解决跳转页面后 GET_STUDENT_BY_JWT 接口不触发的问题)
+        // 原因是：由于 StudentInfoLayout 是所有页面的 layout，所以当登录成功跳转其他页面后
+        // StudentInfoLayout 组件不会重新渲染，所以也不会加载获取用户信息的请求
+        // 所以需要们手动触发
+        studentStore.refetchHandler()
+        // 路由跳转交由 useAutoNavigate 统一控制
+        SkyToast.success(message)
+        return
+      }
+      SkyToast.error(message)
+    } catch (error) {
+      SkyToast.error('服务器忙，请稍后再试')
+      console.error('【studentLogin】Error:', error)
+    }
+  }
 
   return (
     <div className={styles.container}>
@@ -27,7 +69,7 @@ const Login = () => {
         footer={
           <Button
             className={styles['submit-button']}
-            // loading={loading}
+            loading={loading}
             block
             type="submit"
             color="primary"
@@ -46,10 +88,6 @@ const Login = () => {
               required: true,
               message: '用户名不能为空',
             },
-            {
-              pattern: /^(?![0-9]+$)(?![a-z]+$)[a-z0-9]{6,10}$/,
-              message: '有且只能包含小写字母和数字，长度大于 6，小于 10',
-            },
           ]}
         >
           <Input placeholder="请输入用户名" clearable />
@@ -61,10 +99,6 @@ const Login = () => {
             {
               required: true,
               message: '密码不能为空',
-            },
-            {
-              pattern: /^(?![0-9]+$)(?![a-z]+$)[a-z0-9]{6,}$/,
-              message: '有且只能包含小写字母和数字，长度大于 6',
             },
           ]}
           extra={
