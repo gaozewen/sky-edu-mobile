@@ -46,7 +46,7 @@ const Register = () => {
       SkyToast.error(message)
     } catch (error) {
       SkyToast.error('服务器忙，请稍后再试')
-      console.error('studentRegister:', error)
+      console.error('【studentRegister】:', error)
     }
   }
 
