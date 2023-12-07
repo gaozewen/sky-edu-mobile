@@ -1,9 +1,10 @@
 import { SafeArea } from 'antd-mobile'
 import { LeftOutline } from 'antd-mobile-icons'
+import cs from 'classnames'
 import { useLocation } from 'react-router-dom'
 
 import { useGoTo } from '@/hooks/useGoTo'
-import { isNotNeedSkyNavBarBack, PN } from '@/router'
+import { isTabBarRouter, PN } from '@/router'
 
 import styles from './index.module.scss'
 
@@ -19,19 +20,22 @@ const SkyNavBar = () => {
     [PN.MY]: '我的',
   }
 
-  return (
-    <>
-      <div className={styles['safe-area']}>
-        <SafeArea position="top" />
-      </div>
-      <div className={styles.container}>
-        {!isNotNeedSkyNavBarBack(pathname) && (
-          <LeftOutline className={styles.back} onClick={goBack} />
-        )}
+  const isTabBarRouterBoolean = isTabBarRouter(pathname)
 
-        <div className={styles.title}>{TITLES[pathname]}</div>
-      </div>
-    </>
+  return (
+    <div
+      className={cs({
+        [styles.container]: true,
+        [styles.large]: isTabBarRouterBoolean,
+      })}
+    >
+      <SafeArea position="top" />
+      {!isTabBarRouterBoolean && (
+        <LeftOutline className={styles.back} onClick={goBack} />
+      )}
+
+      <div className={styles.title}>{TITLES[pathname]}</div>
+    </div>
   )
 }
 

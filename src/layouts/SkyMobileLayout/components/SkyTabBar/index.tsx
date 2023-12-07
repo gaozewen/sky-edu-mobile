@@ -3,7 +3,7 @@ import { AppOutline, UserOutline } from 'antd-mobile-icons'
 import { useLocation } from 'react-router-dom'
 
 import { useGoTo } from '@/hooks/useGoTo'
-import { isNotNeedSkyTabBar, PN } from '@/router'
+import { isLoginOrRegisterRouter, PN } from '@/router'
 
 import styles from './index.module.scss'
 
@@ -28,7 +28,7 @@ const SkyTabBar = () => {
   ]
 
   // 特定路由不需要底部 TabBar
-  if (isNotNeedSkyTabBar(pathname)) return null
+  if (isLoginOrRegisterRouter(pathname)) return null
 
   return (
     <div className={styles.container}>

@@ -1,10 +1,23 @@
+import { SearchBar } from 'antd-mobile'
+
+import CateSelector from './components/CateSelector'
+import ProductList from './components/ProductList'
 import styles from './index.module.scss'
 
 /**
- * 首页
+ * 精品课程
  */
 const Home = () => {
-  return <div className={styles.container}>首页</div>
+  const onSearch = () => {}
+  const onChange = (key: string) => {}
+
+  return (
+    <div className={styles.container}>
+      <SearchBar placeholder="搜索课程试试" onSearch={onSearch} />
+      <CateSelector onChange={onChange} />
+      <ProductList />
+    </div>
+  )
 }
 
 export default Home

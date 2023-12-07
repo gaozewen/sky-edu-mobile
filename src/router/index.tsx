@@ -46,18 +46,13 @@ export const router = createBrowserRouter([
   },
 ])
 
-export const isLoginRouterOrRegister = (pathname: string) => {
+export const isLoginOrRegisterRouter = (pathname: string) => {
   return [PN.LOGIN, PN.REGISTER].includes(pathname)
 }
 
-// 特定路由不需要顶部 NavBar 的返回按钮
-export const isNotNeedSkyNavBarBack = (pathname: string) => {
+// 是底部 TabBar 导航路由
+export const isTabBarRouter = (pathname: string) => {
   return [PN.HOME, PN.MY].includes(pathname)
-}
-
-// 特定路由不需要底部 TabBar
-export const isNotNeedSkyTabBar = (pathname: string) => {
-  return [PN.LOGIN, PN.REGISTER].includes(pathname)
 }
 
 export default router

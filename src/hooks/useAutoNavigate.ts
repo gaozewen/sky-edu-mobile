@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useLocation, useSearchParams } from 'react-router-dom'
 
-import { isLoginRouterOrRegister, PN } from '@/router'
+import { isLoginOrRegisterRouter, PN } from '@/router'
 
 import { useGoTo } from './useGoTo'
 import { useStudentContext } from './useStudentHooks'
@@ -23,7 +23,7 @@ const useAutoNavigate = (loadingUserData: boolean) => {
     // 已登陆
     if (store.id) {
       // 如果当前路由是登录页时，跳转 orgUrl 页，否则跳转主页
-      if (isLoginRouterOrRegister(pathname)) {
+      if (isLoginOrRegisterRouter(pathname)) {
         const orgUrlPathname = params.get('orgUrl')
         // if (orgUrlPathname === PN.PASSWORD) {
         //   // 如果是修改密码后的登录跳转，直接去首页
@@ -37,7 +37,7 @@ const useAutoNavigate = (loadingUserData: boolean) => {
 
     // 未登录
     // 如果当前路由是登录页，则不处理
-    if (isLoginRouterOrRegister(pathname)) return
+    if (isLoginOrRegisterRouter(pathname)) return
     // 如果当前路由需要登录，则自动跳转登录页
     goTo({
       pathname: PN.LOGIN,
