@@ -14,14 +14,27 @@ export const GET_PRODUCT_CATEGORIES = gql`
 `
 
 export const GET_PRODUCTS_FOR_H5 = gql`
-  query getProductsForH5($pageInfo: PageInfoDTO!, $category: String, $name: String) {
-    getProductsForH5(pageInfo: $pageInfo, category: $category, name: $name) {
+  query getProductsForH5(
+    $pageInfo: PageInfoDTO!
+    $longitude: Float!
+    $latitude: Float!
+    $category: String
+    $name: String
+  ) {
+    getProductsForH5(
+      pageInfo: $pageInfo
+      longitude: $longitude
+      latitude: $latitude
+      category: $category
+      name: $name
+    ) {
       code
       message
       data {
         id
         name
         desc
+        distance
         category
         status
         stock
