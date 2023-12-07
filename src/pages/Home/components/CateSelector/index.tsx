@@ -15,7 +15,8 @@ const CateSelector = ({ onChange }: IProps) => {
   const { data, loading } = useGetProductCategoriesService()
   if (loading) return null
   return (
-    <Tabs className={styles.tabs} onChange={onChange} defaultActiveKey={data[0]?.key}>
+    <Tabs className={styles.tabs} onChange={onChange} defaultActiveKey="all">
+      <Tabs.Tab key="all" title="全部" />
       {data?.map(c => <Tabs.Tab key={c.key} title={c.title} />)}
     </Tabs>
   )

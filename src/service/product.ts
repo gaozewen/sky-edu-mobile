@@ -3,6 +3,7 @@ import { useLazyQuery, useQuery } from '@apollo/client'
 import { DEFAULT_PAGE_SIZE } from '@/constants'
 import { GET_PRODUCT_CATEGORIES, GET_PRODUCTS_FOR_H5 } from '@/graphql/product'
 import { TProductQuery } from '@/types'
+import SkyToast from '@/utils/skyToast'
 
 export const useGetProductCategoriesService = () => {
   const { loading, data } = useQuery<TProductQuery>(GET_PRODUCT_CATEGORIES)
@@ -23,6 +24,7 @@ export const useGetProductsService = () => {
     current?: number
     pageSize?: number
   }) => {
+    SkyToast.loading()
     await getProducts({
       variables: {
         name: params.name,
@@ -33,6 +35,7 @@ export const useGetProductsService = () => {
         },
       },
     })
+    SkyToast.close()
   }
 
   return {

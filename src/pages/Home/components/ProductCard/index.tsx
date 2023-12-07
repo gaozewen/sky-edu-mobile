@@ -1,5 +1,4 @@
 import { Image } from 'antd-mobile'
-import { useEffect, useState } from 'react'
 
 import { IProduct } from '@/types'
 
@@ -13,10 +12,6 @@ interface IProps {
  *  商品卡片
  */
 const ProductCard = ({ data }: IProps) => {
-  const [state, setState] = useState()
-  useEffect(() => {
-    console.log(state, setState)
-  }, [])
   return (
     <div className={styles.container}>
       <Image className={styles.cover} src={data.coverUrl} />
