@@ -1,4 +1,4 @@
-import { ErrorBlock, Grid, PullToRefresh } from 'antd-mobile'
+import { ErrorBlock, Grid, InfiniteScroll, PullToRefresh } from 'antd-mobile'
 
 import { IProduct } from '@/types'
 
@@ -9,12 +9,14 @@ interface IProps {
   data: IProduct[]
   loading: boolean
   onRefresh: () => Promise<any>
+  loadMore: () => Promise<any>
+  hasMore: boolean
 }
 
 /**
  *  商品列表
  */
-const ProductList = ({ data, loading, onRefresh }: IProps) => {
+const ProductList = ({ data, loading, onRefresh, loadMore, hasMore }: IProps) => {
   if (!loading && (!data || data.length === 0)) {
     return <ErrorBlock status="empty" style={{ marginTop: '18vh' }} />
   }
@@ -30,6 +32,8 @@ const ProductList = ({ data, loading, onRefresh }: IProps) => {
           ))}
         </Grid>
       </PullToRefresh>
+
+      <InfiniteScroll loadMore={loadMore} hasMore={hasMore} style={{ marginTop: 18 }} />
     </div>
   )
 }

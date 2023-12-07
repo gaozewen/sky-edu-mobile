@@ -25,7 +25,7 @@ export const useGetProductsService = () => {
     pageSize?: number
   }) => {
     SkyToast.loading()
-    await getProducts({
+    const res = await getProducts({
       variables: {
         name: params.name,
         category: params.category,
@@ -36,12 +36,12 @@ export const useGetProductsService = () => {
       },
     })
     SkyToast.close()
+    return res?.data?.getProductsForH5.data || []
   }
 
   return {
     onGetProducts,
     loading,
     total: data?.getProductsForH5.pageInfo.total || 0,
-    data: data?.getProductsForH5.data || [],
   }
 }
