@@ -2,6 +2,7 @@ import { createBrowserRouter, matchPath, useLocation } from 'react-router-dom'
 
 import SkyMobileLayout from '@/layouts/SkyMobileLayout'
 import UserInfoLayout from '@/layouts/StudentInfoLayout'
+import Buy from '@/pages/Buy'
 import Home from '@/pages/Home'
 import Login from '@/pages/Login'
 import My from '@/pages/My'
@@ -17,6 +18,7 @@ export const PN = {
   MY: '/my',
   STORE: '/store',
   PRODUCT: '/product',
+  BUY: '/buy',
 }
 
 type AllRouteValueType = {
@@ -59,6 +61,11 @@ const ALL_ROUTE: AllRouteType = {
     key: PN.PRODUCT,
     path: '/product/:id',
     name: '课程详情',
+  },
+  [PN.BUY]: {
+    key: PN.BUY,
+    path: '/buy/:id',
+    name: '购买信息',
   },
 }
 
@@ -103,6 +110,10 @@ export const router = createBrowserRouter([
             path: `${PN.PRODUCT}/:id`,
             element: <Product />,
           },
+          {
+            path: `${PN.BUY}/:id`,
+            element: <Buy />,
+          },
         ],
       },
     ],
@@ -120,7 +131,7 @@ export const isTabBarRouter = (pathname: string) => {
 
 // 当前路由是否不需要底部 TabBar
 export const isNoTabBar = (route: AllRouteValueType) => {
-  return [PN.LOGIN, PN.REGISTER, PN.STORE, PN.PRODUCT].includes(route.key)
+  return [PN.LOGIN, PN.REGISTER, PN.STORE, PN.PRODUCT, PN.BUY].includes(route.key)
 }
 
 export default router

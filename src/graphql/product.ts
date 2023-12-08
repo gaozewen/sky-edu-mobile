@@ -98,6 +98,7 @@ export const GET_PRODUCT = gql`
           id
           name
           tel
+          logo
         }
         cards {
           id
