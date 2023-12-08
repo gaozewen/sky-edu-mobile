@@ -6,6 +6,8 @@ import Buy from '@/pages/Buy'
 import Home from '@/pages/Home'
 import Login from '@/pages/Login'
 import My from '@/pages/My'
+import PayFail from '@/pages/PayFail'
+import PaySuccess from '@/pages/PaySuccess'
 import Product from '@/pages/Product'
 import Register from '@/pages/Register'
 import Store from '@/pages/Store'
@@ -19,6 +21,8 @@ export const PN = {
   STORE: '/store',
   PRODUCT: '/product',
   BUY: '/buy',
+  PAY_SUCCESS: '/pay-success',
+  PAY_FAIL: '/pay-fail',
 }
 
 type AllRouteValueType = {
@@ -66,6 +70,16 @@ const ALL_ROUTE: AllRouteType = {
     key: PN.BUY,
     path: '/buy/:id',
     name: '购买信息',
+  },
+  [PN.PAY_SUCCESS]: {
+    key: PN.PAY_SUCCESS,
+    path: '/pay-success',
+    name: '支付成功',
+  },
+  [PN.PAY_FAIL]: {
+    key: PN.PAY_FAIL,
+    path: '/pay-fail',
+    name: '支付失败',
   },
 }
 
@@ -116,6 +130,14 @@ export const router = createBrowserRouter([
           },
         ],
       },
+      {
+        path: PN.PAY_SUCCESS,
+        element: <PaySuccess />,
+      },
+      {
+        path: PN.PAY_FAIL,
+        element: <PayFail />,
+      },
     ],
   },
 ])
@@ -131,7 +153,15 @@ export const isTabBarRouter = (pathname: string) => {
 
 // 当前路由是否不需要底部 TabBar
 export const isNoTabBar = (route: AllRouteValueType) => {
-  return [PN.LOGIN, PN.REGISTER, PN.STORE, PN.PRODUCT, PN.BUY].includes(route.key)
+  return [
+    PN.LOGIN,
+    PN.REGISTER,
+    PN.STORE,
+    PN.PRODUCT,
+    PN.BUY,
+    PN.PAY_SUCCESS,
+    PN.PAY_FAIL,
+  ].includes(route.key)
 }
 
 export default router

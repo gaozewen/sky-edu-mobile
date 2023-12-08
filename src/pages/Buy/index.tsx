@@ -3,9 +3,13 @@ import { useState } from 'react'
 import { useParams } from 'react-router-dom'
 
 import Hr from '@/components/Hr'
+import { IS_MOCK_PAY } from '@/constants'
+import { useGoTo } from '@/hooks/useGoTo'
 import { useStudentContext } from '@/hooks/useStudentHooks'
+import { PN } from '@/router'
 import { useGetWxPayConfigService } from '@/service/order'
 import { useGetProductService } from '@/service/product'
+import SkyToast from '@/utils/skyToast'
 
 import styles from './index.module.scss'
 
@@ -18,10 +22,23 @@ const Buy = () => {
   const { id = '' } = useParams()
   const { data } = useGetProductService(id)
   const [count, setCount] = useState<number>(1)
-  const { store } = useStudentContext()
+  const { store, setStore } = useStudentContext()
   const { getWxPayConfig } = useGetWxPayConfigService()
+  const { goTo } = useGoTo()
 
   if (!data) return null
+
+  const setPayResult = () => {
+    setStore({
+      payResult: {
+        price: data.preferentialPrice * count,
+        storeName: data.store.name,
+        productName: data.name,
+        productDesc: data.desc,
+        rePay: onWxPay,
+      },
+    })
+  }
 
   const onWxPay = async () => {
     if (typeof WeixinJSBridge !== 'undefined') {
@@ -31,15 +48,30 @@ const Buy = () => {
       )
 
       WeixinJSBridge.invoke('getBrandWCPayRequest', wxPayConfig, function (res: any) {
+        // 设置结果页数据
+        setPayResult()
         if (res.err_msg === 'get_brand_wcpay_request:ok') {
           // 使用以上方式判断前端返回,微信团队郑重提示：
           //res.err_msg将在用户支付成功后返回ok，但并不保证它绝对可靠。
+          goTo({ pathname: PN.PAY_SUCCESS })
+          return
         }
+        // 支付失败
+        goTo({ pathname: PN.PAY_FAIL })
       })
+
+      return
     }
+    // 没有 WeixinJSBridge 对象
+    SkyToast.show('请在微信中打开页面')
   }
 
   const onBuyHandler = () => {
+    if (IS_MOCK_PAY) {
+      setPayResult()
+      goTo({ pathname: PN.PAY_FAIL })
+      return
+    }
     // openid 不存在
     if (!store.wxOpenid) {
       window.location.href = `${import.meta.env.VITE_API_URL}/wx/login?userId=${

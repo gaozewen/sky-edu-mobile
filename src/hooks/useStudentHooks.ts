@@ -7,7 +7,7 @@ import { connectFactory, useContextFactory } from '@/utils/contextFactory'
 import useAutoNavigate from './useAutoNavigate'
 
 const KEY = 'student'
-const DEFAULT_VALUE = { id: '', avatar: '', tel: '', nickname: '' }
+const DEFAULT_VALUE = { id: '', avatar: '', tel: '', nickname: '', wxOpenid: '' }
 
 export const connectStudent = connectFactory(KEY, DEFAULT_VALUE)
 export const useStudentContext = () => useContextFactory<IStudent>(KEY)

@@ -1,5 +1,13 @@
 import { Week } from './enum'
 
+interface IPayResult {
+  price: number
+  storeName: string
+  productName: string
+  productDesc: string
+  rePay?: () => void
+}
+
 export interface IStudent {
   id: string
   tel: string
@@ -8,6 +16,7 @@ export interface IStudent {
   wxOpenid: string
   refetchHandler: () => void
   currentOrg?: string
+  payResult?: IPayResult
 }
 
 export interface IPageInfo {

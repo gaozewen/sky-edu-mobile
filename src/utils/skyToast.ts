@@ -27,6 +27,11 @@ const SkyToast = {
   clear: () => {
     Toast.clear()
   },
+  show: (content: string) => {
+    currentToast = Toast.show({
+      content,
+    })
+  },
 }
 
 export default SkyToast
