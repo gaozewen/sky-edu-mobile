@@ -17,24 +17,39 @@ export const PN = {
   STORE: '/store',
 }
 
-const ALL_ROUTE = {
+type AllRouteValueType = {
+  key: string
+  path: string
+  name: string
+}
+
+type AllRouteType = {
+  [key: string]: AllRouteValueType
+}
+
+const ALL_ROUTE: AllRouteType = {
   [PN.LOGIN]: {
+    key: PN.LOGIN,
     path: '/login',
     name: '登录',
   },
   [PN.REGISTER]: {
+    key: PN.REGISTER,
     path: '/register',
     name: '注册',
   },
   [PN.HOME]: {
+    key: PN.HOME,
     path: '/',
     name: '精品课程',
   },
   [PN.MY]: {
+    key: PN.MY,
     path: '/my',
     name: '我的',
   },
   [PN.STORE]: {
+    key: PN.STORE,
     path: '/store/:id',
     name: '门店详情',
   },
@@ -45,7 +60,7 @@ export const useMatchedRoute = () => {
   const { pathname } = location
   const route = Object.values(ALL_ROUTE).find(r => matchPath(r.path, pathname))
 
-  return route || { path: '', name: '' }
+  return route || { path: '', name: '', key: '' }
 }
 
 export const router = createBrowserRouter([
@@ -90,6 +105,11 @@ export const isLoginOrRegisterRouter = (pathname: string) => {
 // 是底部 TabBar 导航路由
 export const isTabBarRouter = (pathname: string) => {
   return [PN.HOME, PN.MY].includes(pathname)
+}
+
+// 当前路由是否不需要底部 TabBar
+export const isNoTabBar = (route: AllRouteValueType) => {
+  return [PN.LOGIN, PN.REGISTER, PN.STORE].includes(route.key)
 }
 
 export default router

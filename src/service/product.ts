@@ -1,7 +1,11 @@
 import { useLazyQuery, useQuery } from '@apollo/client'
 
 import { DEFAULT_PAGE_SIZE } from '@/constants'
-import { GET_PRODUCT_CATEGORIES, GET_PRODUCTS_FOR_H5 } from '@/graphql/product'
+import {
+  GET_PRODUCT_CATEGORIES,
+  GET_PRODUCTS_BY_STORE_ID_FOR_H5,
+  GET_PRODUCTS_FOR_H5,
+} from '@/graphql/product'
 import { TProductQuery } from '@/types'
 import SkyToast from '@/utils/skyToast'
 
@@ -61,5 +65,17 @@ export const useGetProductsService = () => {
     onGetProducts,
     loading,
     total: data?.getProductsForH5.pageInfo.total || 0,
+  }
+}
+
+export const useGetProductsByStoreIdService = (storeId: string) => {
+  const { data } = useQuery<TProductQuery>(GET_PRODUCTS_BY_STORE_ID_FOR_H5, {
+    variables: {
+      storeId,
+    },
+  })
+
+  return {
+    data: data?.getProductsByStoreIdForH5.data,
   }
 }

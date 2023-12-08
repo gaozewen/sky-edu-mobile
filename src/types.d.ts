@@ -77,6 +77,10 @@ export type TProductQuery = {
     data: IProduct[]
     pageInfo: IPageInfo
   }
+  getProductsByStoreIdForH5: {
+    __typename?: 'ProductResultsVO'
+    data: IProduct[]
+  }
 }
 
 export type TStoreQuery = {

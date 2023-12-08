@@ -2,9 +2,12 @@ import { ErrorBlock } from 'antd-mobile'
 import { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 
+import Hr from '@/components/Hr'
 import { useGetStoreService } from '@/service/store'
 
 import BaseInfo from './components/BaseInfo'
+import DescInfo from './components/DescInfo'
+import RecommendProducts from './components/RecommendProducts'
 import styles from './index.module.scss'
 
 /**
@@ -30,6 +33,10 @@ const Store = () => {
   return (
     <div className={styles.container}>
       <BaseInfo data={data} />
+      <Hr />
+      <DescInfo data={data} />
+      <Hr />
+      <RecommendProducts storeId={data.id} />
     </div>
   )
 }

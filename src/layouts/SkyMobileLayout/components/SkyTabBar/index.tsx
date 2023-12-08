@@ -1,9 +1,8 @@
 import { TabBar } from 'antd-mobile'
 import { AppOutline, UserOutline } from 'antd-mobile-icons'
-import { useLocation } from 'react-router-dom'
 
 import { useGoTo } from '@/hooks/useGoTo'
-import { isLoginOrRegisterRouter, PN } from '@/router'
+import { isNoTabBar, PN, useMatchedRoute } from '@/router'
 
 import styles from './index.module.scss'
 
@@ -11,8 +10,7 @@ import styles from './index.module.scss'
  * 底部 TabBar
  */
 const SkyTabBar = () => {
-  const location = useLocation()
-  const { pathname } = location
+  const route = useMatchedRoute()
   const { goTo } = useGoTo()
   const tabs = [
     {
@@ -28,13 +26,13 @@ const SkyTabBar = () => {
   ]
 
   // 特定路由不需要底部 TabBar
-  if (isLoginOrRegisterRouter(pathname)) return null
+  if (isNoTabBar(route)) return null
 
   return (
     <div className={styles.container}>
       <TabBar
         safeArea
-        activeKey={pathname}
+        activeKey={route.key}
         onChange={value =>
           goTo({
             pathname: value,

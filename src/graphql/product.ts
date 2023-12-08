@@ -56,3 +56,21 @@ export const GET_PRODUCTS_FOR_H5 = gql`
     }
   }
 `
+
+export const GET_PRODUCTS_BY_STORE_ID_FOR_H5 = gql`
+  query getProductsByStoreIdForH5($storeId: String!) {
+    getProductsByStoreIdForH5(storeId: $storeId) {
+      code
+      message
+      data {
+        id
+        name
+        desc
+        coverUrl
+        sellNumber
+        originalPrice
+        preferentialPrice
+      }
+    }
+  }
+`
