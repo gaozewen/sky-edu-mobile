@@ -57,8 +57,10 @@ export const useGetProductsService = () => {
         longitude,
         latitude,
       },
+      onCompleted: () => {
+        SkyToast.close()
+      },
     })
-    SkyToast.close()
     return res?.data?.getProductsForH5.data || []
   }
 
