@@ -1,0 +1,66 @@
+.container {
+  padding: 10px;
+  background-color: #fff;
+  .title {
+    font-size: 18px;
+    font-weight: bold;
+    .logo {
+      width: 30px;
+      height: 30px;
+      margin-right: 5px;
+      vertical-align: middle;
+      border: solid 2px #ccc;
+      border-radius: 50%;
+    }
+  }
+
+  .tags {
+    .tag-item {
+      svg {
+        margin-right: 5px;
+        font-size: 14px;
+      }
+      .tag {
+        height: 30px;
+        margin-right: 10px;
+        font-size: 12px;
+        line-height: 30px;
+        color: #ccc;
+      }
+    }
+  }
+
+  .swiper {
+    overflow: hidden;
+    border-radius: 8px;
+  }
+
+  .address {
+    margin-top: 10px;
+    line-height: 18px;
+
+    .left {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      .icon-location {
+        margin-right: 5px;
+        color: var(--adm-color-primary);
+      }
+
+      .text {
+        color: #666;
+      }
+    }
+
+    .icon-phone {
+      height: 30px;
+      padding-left: 10px;
+      font-size: 20px;
+      line-height: 30px;
+      color: var(--adm-color-primary);
+      text-align: center;
+      border-left: 1px solid #f2f2f2;
+    }
+  }
+}

@@ -4,7 +4,7 @@ import cs from 'classnames'
 import { useLocation } from 'react-router-dom'
 
 import { useGoTo } from '@/hooks/useGoTo'
-import { isTabBarRouter, PN } from '@/router'
+import { isTabBarRouter, useMatchedRoute } from '@/router'
 
 import styles from './index.module.scss'
 
@@ -15,10 +15,7 @@ const SkyNavBar = () => {
   const location = useLocation()
   const { pathname } = location
   const { goBack } = useGoTo()
-  const TITLES = {
-    [PN.HOME]: '精品课程',
-    [PN.MY]: '我的',
-  }
+  const route = useMatchedRoute()
 
   const isTabBarRouterBoolean = isTabBarRouter(pathname)
 
@@ -34,7 +31,7 @@ const SkyNavBar = () => {
         <LeftOutline className={styles.back} onClick={goBack} />
       )}
 
-      <div className={styles.title}>{TITLES[pathname]}</div>
+      <div className={styles.title}>{route.name}</div>
     </div>
   )
 }

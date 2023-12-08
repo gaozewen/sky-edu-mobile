@@ -1,5 +1,7 @@
 import { Image } from 'antd-mobile'
 
+import { useGoTo } from '@/hooks/useGoTo'
+import { PN } from '@/router'
 import { IProduct } from '@/types'
 
 import styles from './index.module.scss'
@@ -12,13 +14,19 @@ interface IProps {
  *  商品卡片
  */
 const ProductCard = ({ data }: IProps) => {
+  const { goTo } = useGoTo()
   return (
     <div className={styles.container}>
       <Image className={styles.cover} src={data.coverUrl} />
       <div className={styles.info}>
         <div className={styles.name}>{data.name}</div>
         <div className={styles.store}>
-          <span className={styles['store-name']}>{data.store.name}</span>
+          <span
+            className={styles['store-name']}
+            onClick={() => goTo({ pathname: `${PN.STORE}/${data.store.id}` })}
+          >
+            {data.store.name}
+          </span>
           <span className={styles.distance}>{data.distance || '未知'}</span>
         </div>
         <div className={styles.price}>

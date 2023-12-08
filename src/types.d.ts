@@ -51,6 +51,7 @@ export interface IProduct {
   id: string
   name: string
   desc: string
+  distance?: string
   status: ProductStatus
   category: string
   stock: number
@@ -75,5 +76,14 @@ export type TProductQuery = {
     __typename?: 'ProductResultsVO'
     data: IProduct[]
     pageInfo: IPageInfo
+  }
+}
+
+export type TStoreQuery = {
+  getStore: {
+    __typename?: 'StoreResultVO'
+    data: IStore
+    code: number
+    message: string
   }
 }
