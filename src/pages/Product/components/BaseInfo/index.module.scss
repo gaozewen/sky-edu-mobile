@@ -1,0 +1,25 @@
+.container {
+  padding: 10px;
+  background-color: #fff;
+  .banner {
+    width: 100%;
+    border-radius: 8px;
+  }
+
+  .name {
+    font-size: 18px;
+    font-weight: bold;
+    line-height: 36px;
+  }
+  .desc {
+    font-size: 14px;
+    color: #666;
+  }
+}
+.count {
+  padding: 0 10px;
+  font-size: 12px;
+  line-height: 28px;
+  color: #666;
+  background-color: #fff;
+}

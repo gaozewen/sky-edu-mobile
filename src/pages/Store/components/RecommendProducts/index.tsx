@@ -1,5 +1,7 @@
 import { Card, ErrorBlock, Grid, Image } from 'antd-mobile'
 
+import { useGoTo } from '@/hooks/useGoTo'
+import { PN } from '@/router'
 import { useGetProductsByStoreIdService } from '@/service/product'
 
 import styles from './index.module.scss'
@@ -13,7 +15,7 @@ interface IProps {
  */
 const RecommendProducts = ({ storeId }: IProps) => {
   const { data } = useGetProductsByStoreIdService(storeId)
-
+  const { goTo } = useGoTo()
   return (
     <Card title="推荐课程" className={styles.container}>
       {!data && (
@@ -25,26 +27,28 @@ const RecommendProducts = ({ storeId }: IProps) => {
         />
       )}
       {(data || []).map(p => (
-        <Grid key={p.id} columns={12} className={styles.product}>
-          <Grid.Item span={2}>
-            <Image src={p.coverUrl} alt="商品图片" className={styles.cover} />
-          </Grid.Item>
+        <div key={p.id} onClick={() => goTo({ pathname: `${PN.PRODUCT}/${p.id}` })}>
+          <Grid columns={12} className={styles.product}>
+            <Grid.Item span={2}>
+              <Image src={p.coverUrl} alt="商品图片" className={styles.cover} />
+            </Grid.Item>
 
-          <Grid.Item span={8} className={styles.content}>
-            <div className={styles.name}>{p.name}</div>
-            <div className={styles.desc}>
-              <span className={styles.text}>{p.desc}</span>
-              <span className={styles['sell-number']}>
-                已售&nbsp;{p.sellNumber || 0}
-              </span>
-            </div>
-          </Grid.Item>
+            <Grid.Item span={8} className={styles.content}>
+              <div className={styles.name}>{p.name}</div>
+              <div className={styles.desc}>
+                <span className={styles.text}>{p.desc}</span>
+                <span className={styles['sell-number']}>
+                  已售&nbsp;{p.sellNumber || 0}
+                </span>
+              </div>
+            </Grid.Item>
 
-          <Grid.Item span={2}>
-            <div className={styles.price}>¥ {p.preferentialPrice}</div>
-            <div className={styles['old-price']}>¥ {p.originalPrice}</div>
-          </Grid.Item>
-        </Grid>
+            <Grid.Item span={2}>
+              <div className={styles.price}>¥ {p.preferentialPrice}</div>
+              <div className={styles['old-price']}>¥ {p.originalPrice}</div>
+            </Grid.Item>
+          </Grid>
+        </div>
       ))}
     </Card>
   )

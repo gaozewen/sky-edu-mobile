@@ -2,6 +2,7 @@ import { useLazyQuery, useQuery } from '@apollo/client'
 
 import { DEFAULT_PAGE_SIZE } from '@/constants'
 import {
+  GET_PRODUCT,
   GET_PRODUCT_CATEGORIES,
   GET_PRODUCTS_BY_STORE_ID_FOR_H5,
   GET_PRODUCTS_FOR_H5,
@@ -77,5 +78,18 @@ export const useGetProductsByStoreIdService = (storeId: string) => {
 
   return {
     data: data?.getProductsByStoreIdForH5.data,
+  }
+}
+
+export const useGetProductService = (id: string) => {
+  const { data, loading } = useQuery<TProductQuery>(GET_PRODUCT, {
+    variables: {
+      id,
+    },
+  })
+
+  return {
+    loading,
+    data: data?.getProduct.data,
   }
 }

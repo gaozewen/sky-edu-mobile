@@ -1,0 +1,28 @@
+.container {
+  padding: 10px;
+  margin-bottom: 5px;
+  line-height: 25px;
+  color: #666;
+  background-color: #fff;
+
+  .card-name {
+    font-size: 13px;
+    font-weight: bold;
+    color: #111;
+  }
+  .desc {
+    margin-bottom: 5px;
+    line-height: 20px;
+    text-align: justify;
+  }
+
+  .title {
+    margin-top: 10px;
+    font-size: 15px;
+    color: var(--adm-color-primary);
+  }
+}
+
+.bottom {
+  height: 68px;
+}

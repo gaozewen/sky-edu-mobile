@@ -16,14 +16,20 @@ interface IProps {
 const ProductCard = ({ data }: IProps) => {
   const { goTo } = useGoTo()
   return (
-    <div className={styles.container}>
+    <div
+      className={styles.container}
+      onClick={() => goTo({ pathname: `${PN.PRODUCT}/${data.id}` })}
+    >
       <Image className={styles.cover} src={data.coverUrl} />
       <div className={styles.info}>
         <div className={styles.name}>{data.name}</div>
         <div className={styles.store}>
           <span
             className={styles['store-name']}
-            onClick={() => goTo({ pathname: `${PN.STORE}/${data.store.id}` })}
+            onClick={e => {
+              e.stopPropagation()
+              goTo({ pathname: `${PN.STORE}/${data.store.id}` })
+            }}
           >
             {data.store.name}
           </span>

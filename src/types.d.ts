@@ -1,3 +1,5 @@
+import { Week } from './enum'
+
 export interface IStudent {
   id: string
   tel: string
@@ -47,6 +49,43 @@ export interface IStore {
   businessLicense: string
 }
 
+export interface IOrderTime {
+  id: string
+  startTime: string
+  endTime: string
+}
+
+export interface IWeekOrderTime {
+  week: Week
+  orderTimes: IOrderTime[]
+}
+
+export interface ICourse {
+  id: string
+  name: string // 标题
+  desc?: string
+  group?: string // 适龄人群
+  baseAbility?: string
+  limitNumber: number // 限制人数
+  duration: number // 持续时长
+  reserveInfo?: string
+  refundInfo?: string
+  otherInfo?: string
+  // 持续一周的可预约时间
+  weeklyOrderTimes: IWeekOrderTime[]
+  // 课程关联的所有消费卡名称，是前端去重拼接的
+  cardName?: string
+}
+
+export interface ICard {
+  id: string
+  name?: string
+  type?: string
+  time?: number
+  validateDay?: number
+  course: ICourse
+}
+
 export interface IProduct {
   id: string
   name: string
@@ -63,6 +102,7 @@ export interface IProduct {
   originalPrice: number
   preferentialPrice: number
   store: IStore
+  cards: ICard[]
 }
 
 export type TProductQuery = {
@@ -80,6 +120,10 @@ export type TProductQuery = {
   getProductsByStoreIdForH5: {
     __typename?: 'ProductResultsVO'
     data: IProduct[]
+  }
+  getProduct: {
+    __typename?: 'ProductResultVO'
+    data: IProduct
   }
 }
 

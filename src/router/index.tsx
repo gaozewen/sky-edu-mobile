@@ -5,6 +5,7 @@ import UserInfoLayout from '@/layouts/StudentInfoLayout'
 import Home from '@/pages/Home'
 import Login from '@/pages/Login'
 import My from '@/pages/My'
+import Product from '@/pages/Product'
 import Register from '@/pages/Register'
 import Store from '@/pages/Store'
 
@@ -15,6 +16,7 @@ export const PN = {
   HOME: '/',
   MY: '/my',
   STORE: '/store',
+  PRODUCT: '/product',
 }
 
 type AllRouteValueType = {
@@ -52,6 +54,11 @@ const ALL_ROUTE: AllRouteType = {
     key: PN.STORE,
     path: '/store/:id',
     name: '门店详情',
+  },
+  [PN.PRODUCT]: {
+    key: PN.PRODUCT,
+    path: '/product/:id',
+    name: '课程详情',
   },
 }
 
@@ -92,6 +99,10 @@ export const router = createBrowserRouter([
             path: `${PN.STORE}/:id`,
             element: <Store />,
           },
+          {
+            path: `${PN.PRODUCT}/:id`,
+            element: <Product />,
+          },
         ],
       },
     ],
@@ -109,7 +120,7 @@ export const isTabBarRouter = (pathname: string) => {
 
 // 当前路由是否不需要底部 TabBar
 export const isNoTabBar = (route: AllRouteValueType) => {
-  return [PN.LOGIN, PN.REGISTER, PN.STORE].includes(route.key)
+  return [PN.LOGIN, PN.REGISTER, PN.STORE, PN.PRODUCT].includes(route.key)
 }
 
 export default router

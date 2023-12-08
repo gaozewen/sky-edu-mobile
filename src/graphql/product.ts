@@ -74,3 +74,59 @@ export const GET_PRODUCTS_BY_STORE_ID_FOR_H5 = gql`
     }
   }
 `
+
+export const GET_PRODUCT = gql`
+  query getProduct($id: String!) {
+    getProduct(id: $id) {
+      code
+      message
+      data {
+        id
+        name
+        desc
+        category
+        status
+        stock
+        curStock
+        limitBuyNumber
+        sellNumber
+        coverUrl
+        bannerUrl
+        originalPrice
+        preferentialPrice
+        store {
+          id
+          name
+          tel
+        }
+        cards {
+          id
+          name
+          type
+          time
+          validateDay
+          course {
+            id
+            name
+            desc
+            group
+            baseAbility
+            limitNumber
+            duration
+            reserveInfo
+            refundInfo
+            otherInfo
+            weeklyOrderTimes {
+              week
+              orderTimes {
+                id
+                startTime
+                endTime
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+`
