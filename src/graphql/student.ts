@@ -26,6 +26,7 @@ export const GET_STUDENT_BY_JWT = gql`
       tel
       nickname
       avatar
+      wxOpenid
     }
   }
 `

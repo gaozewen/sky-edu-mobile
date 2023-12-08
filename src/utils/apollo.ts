@@ -3,7 +3,7 @@ import { ApolloClient, ApolloLink, from, HttpLink, InMemoryCache } from '@apollo
 // import { ErrorLink } from '@apollo/client/link/error'
 import { getToken } from './userToken'
 
-const httpLink = new HttpLink({ uri: import.meta.env.VITE_API_URL })
+const httpLink = new HttpLink({ uri: import.meta.env.VITE_API_GQL_URL })
 
 const authLink = new ApolloLink((operation, forward) => {
   // get the authentication token from local storage if it exists

@@ -24,9 +24,9 @@ export const useLoadStudentData = () => {
         const student = data.getStudentByJWT
         // 已登录
         if (student) {
-          const { id, avatar, tel, nickname } = student
+          const { id, avatar, tel, nickname, wxOpenid } = student
           // 将用户信息存入 userContext 的 store 中
-          setStore({ id, avatar, tel, nickname, refetchHandler: refetch })
+          setStore({ id, avatar, tel, nickname, wxOpenid, refetchHandler: refetch })
           // 当前在登录页面，直接跳到首页
           // 路由跳转交由 useAutoNavigate 统一控制
           return

@@ -4,9 +4,12 @@ import { useParams } from 'react-router-dom'
 
 import Hr from '@/components/Hr'
 import { useStudentContext } from '@/hooks/useStudentHooks'
+import { useGetWxPayConfigService } from '@/service/order'
 import { useGetProductService } from '@/service/product'
 
 import styles from './index.module.scss'
+
+const WeixinJSBridge = (window as any).WeixinJSBridge
 
 /**
  *  购买页
@@ -16,11 +19,37 @@ const Buy = () => {
   const { data } = useGetProductService(id)
   const [count, setCount] = useState<number>(1)
   const { store } = useStudentContext()
-  console.log('gzw===>data', data)
-
-  const onSubmit = () => {}
+  const { getWxPayConfig } = useGetWxPayConfigService()
 
   if (!data) return null
+
+  const onWxPay = async () => {
+    if (typeof WeixinJSBridge !== 'undefined') {
+      const wxPayConfig = await getWxPayConfig(
+        data.id,
+        data.preferentialPrice * count * 100
+      )
+
+      WeixinJSBridge.invoke('getBrandWCPayRequest', wxPayConfig, function (res: any) {
+        if (res.err_msg === 'get_brand_wcpay_request:ok') {
+          // 使用以上方式判断前端返回,微信团队郑重提示：
+          //res.err_msg将在用户支付成功后返回ok，但并不保证它绝对可靠。
+        }
+      })
+    }
+  }
+
+  const onBuyHandler = () => {
+    // openid 不存在
+    if (!store.wxOpenid) {
+      window.location.href = `${import.meta.env.VITE_API_URL}/wx/login?userId=${
+        store.id
+      }&url=${window.location.href}`
+      return
+    }
+    // openid 存在，进行微信支付流程
+    onWxPay()
+  }
 
   return (
     <div className={styles.container}>
@@ -58,8 +87,8 @@ const Buy = () => {
           <span className={styles['buy-old-price']}>¥{data.originalPrice * count}</span>
         </Grid.Item>
         <Grid.Item span={1}>
-          <Button className={styles.submit} onClick={onSubmit} shape="rectangular">
-            提交订单
+          <Button className={styles.submit} onClick={onBuyHandler} shape="rectangular">
+            {store.wxOpenid ? '提交订单' : '去微信授权'}
           </Button>
         </Grid.Item>
       </Grid>

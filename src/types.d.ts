@@ -5,6 +5,7 @@ export interface IStudent {
   tel: string
   nickname: string
   avatar: string
+  wxOpenid: string
   refetchHandler: () => void
   currentOrg?: string
 }
@@ -131,6 +132,24 @@ export type TStoreQuery = {
   getStore: {
     __typename?: 'StoreResultVO'
     data: IStore
+    code: number
+    message: string
+  }
+}
+
+export interface IWxPayConfig {
+  appId: string
+  timeStamp: string
+  nonceStr: string
+  package: string
+  signType: string
+  paySign: string
+}
+
+export type TWxPayQuery = {
+  getWxPayConfig: {
+    __typename?: 'WxPayConfigResultVO'
+    data: IWxPayConfig
     code: number
     message: string
   }
