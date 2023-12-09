@@ -1,6 +1,8 @@
 import { Week } from './enum'
 
 interface IPayResult {
+  quantity: number
+  productId: string
   price: number
   storeName: string
   productName: string
@@ -159,6 +161,14 @@ export type TWxPayQuery = {
   getWxPayConfig: {
     __typename?: 'WxPayConfigResultVO'
     data: IWxPayConfig
+    code: number
+    message: string
+  }
+}
+
+export type TWxPayMutation = {
+  mockWxPay?: {
+    __typename?: 'ResultVO'
     code: number
     message: string
   }

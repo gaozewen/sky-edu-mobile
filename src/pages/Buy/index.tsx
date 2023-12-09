@@ -1,4 +1,5 @@
 import { Button, Grid, Image, Stepper } from 'antd-mobile'
+import { nanoid } from 'nanoid'
 import { useState } from 'react'
 import { useParams } from 'react-router-dom'
 
@@ -11,6 +12,7 @@ import { useGetWxPayConfigService } from '@/service/order'
 import { useGetProductService } from '@/service/product'
 import SkyToast from '@/utils/skyToast'
 
+import MockWxPay from './components/MockWxPay'
 import styles from './index.module.scss'
 
 const WeixinJSBridge = (window as any).WeixinJSBridge
@@ -26,11 +28,16 @@ const Buy = () => {
   const { getWxPayConfig } = useGetWxPayConfigService()
   const { goTo } = useGoTo()
 
+  const [visible, setVisible] = useState<boolean>(false)
+
   if (!data) return null
 
   const setPayResult = () => {
     setStore({
+      wxOpenid: nanoid(),
       payResult: {
+        quantity: count,
+        productId: data.id,
         price: data.preferentialPrice * count,
         storeName: data.store.name,
         productName: data.name,
@@ -44,6 +51,7 @@ const Buy = () => {
     if (typeof WeixinJSBridge !== 'undefined') {
       const wxPayConfig = await getWxPayConfig(
         data.id,
+        count,
         data.preferentialPrice * count * 100
       )
 
@@ -69,7 +77,7 @@ const Buy = () => {
   const onBuyHandler = () => {
     if (IS_MOCK_PAY) {
       setPayResult()
-      goTo({ pathname: PN.PAY_FAIL })
+      setVisible(true)
       return
     }
     // openid 不存在
@@ -124,6 +132,8 @@ const Buy = () => {
           </Button>
         </Grid.Item>
       </Grid>
+
+      <MockWxPay visible={visible} setVisible={setVisible} />
     </div>
   )
 }
