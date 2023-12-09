@@ -106,6 +106,7 @@ const Buy = () => {
         <Stepper
           className={styles.stepper}
           value={count}
+          min={1}
           onChange={val => {
             setCount(val)
           }}
