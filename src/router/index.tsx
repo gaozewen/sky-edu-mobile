@@ -6,9 +6,13 @@ import Buy from '@/pages/Buy'
 import Home from '@/pages/Home'
 import Login from '@/pages/Login'
 import My from '@/pages/My'
+import MyCard from '@/pages/MyCard'
+import MyCourse from '@/pages/MyCourse'
+import OrderCourse from '@/pages/OrderCourse'
 import PayFail from '@/pages/PayFail'
 import PaySuccess from '@/pages/PaySuccess'
 import Product from '@/pages/Product'
+import Profile from '@/pages/Profile'
 import Register from '@/pages/Register'
 import Store from '@/pages/Store'
 
@@ -23,6 +27,10 @@ export const PN = {
   BUY: '/buy',
   PAY_SUCCESS: '/pay-success',
   PAY_FAIL: '/pay-fail',
+  PROFILE: '/profile',
+  ORDER_COURSE: '/order-course',
+  MY_COURSE: '/my-course',
+  MY_CARD: '/my-card',
 }
 
 type AllRouteValueType = {
@@ -81,6 +89,26 @@ const ALL_ROUTE: AllRouteType = {
     path: '/pay-fail',
     name: '支付失败',
   },
+  [PN.PROFILE]: {
+    key: PN.PROFILE,
+    path: '/profile',
+    name: '个人信息',
+  },
+  [PN.ORDER_COURSE]: {
+    key: PN.ORDER_COURSE,
+    path: '/order-course',
+    name: '预约课程',
+  },
+  [PN.MY_COURSE]: {
+    key: PN.MY_COURSE,
+    path: '/my-course',
+    name: '我的课程表',
+  },
+  [PN.MY_CARD]: {
+    key: PN.MY_CARD,
+    path: '/my-card',
+    name: '我的消费卡',
+  },
 }
 
 export const useMatchedRoute = () => {
@@ -128,6 +156,22 @@ export const router = createBrowserRouter([
             path: `${PN.BUY}/:id`,
             element: <Buy />,
           },
+          {
+            path: PN.PROFILE,
+            element: <Profile />,
+          },
+          {
+            path: PN.ORDER_COURSE,
+            element: <OrderCourse />,
+          },
+          {
+            path: PN.MY_COURSE,
+            element: <MyCourse />,
+          },
+          {
+            path: PN.MY_CARD,
+            element: <MyCard />,
+          },
         ],
       },
       {
@@ -161,6 +205,10 @@ export const isNoTabBar = (route: AllRouteValueType) => {
     PN.BUY,
     PN.PAY_SUCCESS,
     PN.PAY_FAIL,
+    PN.PROFILE,
+    PN.ORDER_COURSE,
+    PN.MY_COURSE,
+    PN.MY_CARD,
   ].includes(route.key)
 }
 
