@@ -1,7 +1,7 @@
 import { Space, Tag } from 'antd-mobile'
 import { BankcardOutline } from 'antd-mobile-icons'
 import cs from 'classnames'
-import * as dayjs from 'dayjs'
+import dayjs from 'dayjs'
 
 import { DAY_FORMAT } from '@/constants'
 import { CardRecordStatus, CardType } from '@/enum'

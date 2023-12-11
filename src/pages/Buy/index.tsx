@@ -1,6 +1,6 @@
 import { Button, Grid, Image, Stepper } from 'antd-mobile'
 import { nanoid } from 'nanoid'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
 import Hr from '@/components/Hr'
@@ -29,6 +29,14 @@ const Buy = () => {
   const { goTo } = useGoTo()
 
   const [visible, setVisible] = useState<boolean>(false)
+
+  useEffect(() => {
+    if (IS_MOCK_PAY) {
+      setStore({
+        wxOpenid: nanoid(),
+      })
+    }
+  }, [])
 
   if (!data) return null
 
@@ -129,7 +137,7 @@ const Buy = () => {
         </Grid.Item>
         <Grid.Item span={1}>
           <Button className={styles.submit} onClick={onBuyHandler} shape="rectangular">
-            {store.wxOpenid ? '提交订单' : '去微信授权'}
+            {store.wxOpenid ? '去支付' : '去微信授权'}
           </Button>
         </Grid.Item>
       </Grid>

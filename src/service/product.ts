@@ -30,6 +30,10 @@ const getPosition = () =>
       err => {
         console.error('【getPosition】Error:', err)
         resolve({ longitude: 0, latitude: 0 })
+      },
+      {
+        timeout: 3000,
+        maximumAge: 1000 * 60, // 1 分钟内获取过就不再重新获取
       }
     )
   })
