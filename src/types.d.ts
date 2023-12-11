@@ -1,4 +1,4 @@
-import { Week } from './enum'
+import { CardRecordStatus, Week } from './enum'
 
 interface IPayResult {
   quantity: number
@@ -169,6 +169,27 @@ export type TWxPayQuery = {
 export type TWxPayMutation = {
   mockWxPay?: {
     __typename?: 'ResultVO'
+    code: number
+    message: string
+  }
+}
+
+export interface ICardRecord {
+  id: string
+  startTime: string
+  endTime: string
+  buyTime: string
+  remainTime: number
+  status: CardRecordStatus
+  card: ICard
+  store: IStore
+}
+
+export type TCardRecordQuery = {
+  getCardRecordsForH5: {
+    __typename?: 'getCardRecordsForH5'
+    pageInfo: IPageInfo
+    data: ICardRecord[]
     code: number
     message: string
   }

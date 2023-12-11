@@ -17,6 +17,9 @@ dependencies:
   classnames:
     specifier: ^2.3.2
     version: 2.3.2
+  dayjs:
+    specifier: ^1.11.10
+    version: 1.11.10
   graphql:
     specifier: ^16.8.1
     version: 16.8.1

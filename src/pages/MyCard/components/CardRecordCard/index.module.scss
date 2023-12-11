@@ -1,0 +1,54 @@
+.container {
+  position: relative;
+  padding: 10px;
+  margin-bottom: 18px;
+  overflow: hidden;
+  font-size: 12px;
+  color: #fff;
+  background: linear-gradient(
+    90deg,
+    rgba(2, 173, 177, 1) 0%,
+    rgba(3, 207, 177, 1) 100%
+  );
+  border-radius: 6px;
+  box-shadow: 4px 7px 5px 0 rgb(0, 0, 0, 0.1);
+
+  &::after {
+    position: absolute;
+    top: 0;
+    right: 10px;
+    font-size: 50px;
+    font-style: oblique;
+    font-weight: bolder;
+    line-height: 58px;
+    opacity: 0.3;
+  }
+
+  &.expired {
+    background: #ccc;
+    &::after {
+      content: '已过期';
+    }
+  }
+
+  &.depleted {
+    background: #ccc;
+    &::after {
+      content: '已耗尽';
+    }
+  }
+
+  .top {
+    width: 100%;
+    font-size: 14px;
+
+    .name {
+      margin-left: 5px;
+    }
+  }
+
+  .bottom {
+    width: 100%;
+    margin-top: 10px;
+  }
+}

@@ -1,12 +1,12 @@
-import { ErrorBlock, Grid, InfiniteScroll, PullToRefresh } from 'antd-mobile'
+import { ErrorBlock, InfiniteScroll, PullToRefresh } from 'antd-mobile'
 
-import { IProduct } from '@/types'
+import { ICardRecord } from '@/types'
 
-import ProductCard from '../ProductCard'
+import CardRecordCard from '../CardRecordCard'
 import styles from './index.module.scss'
 
 interface IProps {
-  data: IProduct[]
+  data: ICardRecord[]
   loading: boolean
   onRefresh: () => Promise<any>
   loadMore: () => Promise<any>
@@ -14,10 +14,11 @@ interface IProps {
 }
 
 /**
- *  商品列表
+ *  消费卡记录列表
  */
-const ProductList = ({ data, loading, onRefresh, loadMore, hasMore }: IProps) => {
+const CardRecordList = ({ data, loading, onRefresh, loadMore, hasMore }: IProps) => {
   if (loading) return null
+
   if (!data || data.length === 0) {
     return <ErrorBlock status="empty" style={{ marginTop: '18vh' }} />
   }
@@ -25,13 +26,9 @@ const ProductList = ({ data, loading, onRefresh, loadMore, hasMore }: IProps) =>
   return (
     <div className={styles.container}>
       <PullToRefresh onRefresh={onRefresh}>
-        <Grid columns={2} gap={10}>
-          {data.map(p => (
-            <Grid.Item key={p.id}>
-              <ProductCard data={p} />
-            </Grid.Item>
-          ))}
-        </Grid>
+        {data.map(p => (
+          <CardRecordCard key={p.id} data={p} />
+        ))}
       </PullToRefresh>
 
       <InfiniteScroll loadMore={loadMore} hasMore={hasMore} style={{ marginTop: 18 }} />
@@ -39,4 +36,4 @@ const ProductList = ({ data, loading, onRefresh, loadMore, hasMore }: IProps) =>
   )
 }
 
-export default ProductList
+export default CardRecordList

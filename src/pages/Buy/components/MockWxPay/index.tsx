@@ -1,4 +1,5 @@
 import { NumberKeyboard, PasscodeInput, Popup } from 'antd-mobile'
+import { useState } from 'react'
 
 import { SUCCESS } from '@/constants/code'
 import { useGoTo } from '@/hooks/useGoTo'
@@ -25,21 +26,29 @@ const MockWxPay = ({ visible, setVisible }: IProps) => {
 
   const { mockWxPay } = useMockWxPayService()
   const { goTo } = useGoTo()
+  const [value, setValue] = useState('')
 
-  const onChange = async (value: string) => {
-    if (value.length > 5) {
-      const { code, message } = await mockWxPay(productId, quantity, price * 100)
-      if (code === SUCCESS) {
-        SkyToast.success(message)
+  const onChange = async (val: string) => {
+    setValue(val)
+    if (val.length > 5) {
+      try {
+        const { code, message } = await mockWxPay(productId, quantity, price * 100)
+        if (code === SUCCESS) {
+          SkyToast.success(message)
+          setTimeout(() => {
+            goTo({ pathname: PN.PAY_SUCCESS })
+          }, 1000)
+          return
+        }
+        SkyToast.error(message)
         setTimeout(() => {
-          goTo({ pathname: PN.PAY_SUCCESS })
+          goTo({ pathname: PN.PAY_FAIL })
         }, 1000)
-        return
+      } catch (error) {
+        console.error('【mockWxPay】Error:', error)
+        setVisible(false)
+        setValue('')
       }
-      SkyToast.error(message)
-      setTimeout(() => {
-        goTo({ pathname: PN.PAY_FAIL })
-      }, 1000)
     }
   }
   return (
@@ -55,7 +64,14 @@ const MockWxPay = ({ visible, setVisible }: IProps) => {
         <div className={styles.title}>请输入支付密码</div>
         <div className={styles.desc}>天空支付服务平台</div>
         <div className={styles.amount}>¥{price}</div>
-        <PasscodeInput seperated onChange={onChange} keyboard={<NumberKeyboard />} />
+        {visible && (
+          <PasscodeInput
+            value={value}
+            seperated
+            onChange={onChange}
+            keyboard={<NumberKeyboard />}
+          />
+        )}
       </div>
     </Popup>
   )
