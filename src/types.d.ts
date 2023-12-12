@@ -59,6 +59,7 @@ export interface IStore {
   identityCardBackImg: string
   identityCardFrontImg: string
   businessLicense: string
+  courses?: ICourse[]
 }
 
 export interface IOrderTime {
@@ -74,6 +75,7 @@ export interface IWeekOrderTime {
 
 export interface ICourse {
   id: string
+  coverUrl: string // 课程封面图
   name: string // 标题
   desc?: string
   group?: string // 适龄人群
@@ -87,6 +89,7 @@ export interface ICourse {
   weeklyOrderTimes: IWeekOrderTime[]
   // 课程关联的所有消费卡名称，是前端去重拼接的
   cardName?: string
+  teachers?: ITeacher[]
 }
 
 export interface ICard {
@@ -190,6 +193,35 @@ export type TCardRecordQuery = {
     __typename?: 'getCardRecordsForH5'
     pageInfo: IPageInfo
     data: ICardRecord[]
+    code: number
+    message: string
+  }
+}
+
+export interface ITeacher {
+  id: string
+  account: string
+  password: string
+  tel: string
+  avatar: string
+  nickname: string
+  store: IStore
+}
+
+export interface ISchedule {
+  id: string
+  startTime: string
+  endTime: string
+  limitNumber: number
+  course: ICourse
+  store: IStore
+  teacher: ITeacher
+}
+
+export type TScheduleQuery = {
+  getCanOrderedCoursesGroupByStore: {
+    pageInfo: IPageInfo
+    data: IStore[]
     code: number
     message: string
   }
