@@ -7,14 +7,13 @@ import styles from './index.module.scss'
 
 interface IProps {
   data: ICourse[]
+  onOrder: (courseId: string) => void
 }
 
 /**
  * 课程列表
  */
-const CourseList = ({ data }: IProps) => {
-  const onOrder = (courseId: string) => {}
-
+const CourseList = ({ data, onOrder }: IProps) => {
   return (
     <div className={styles.container}>
       <List>

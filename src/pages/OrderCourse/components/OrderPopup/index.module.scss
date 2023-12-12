@@ -1,0 +1,13 @@
+.container {
+  padding-top: 18px;
+
+  :global(.adm-selector-item) {
+    padding: 4px 8px;
+  }
+
+  .btn {
+    box-sizing: border-box;
+    width: 90%;
+    margin: 8px 5% 28px;
+  }
+}

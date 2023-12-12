@@ -30,3 +30,21 @@ export const GET_CAN_ORDERED_COURSES_GROUP_BY_STORE = gql`
     }
   }
 `
+
+export const GET_SCHEDULES_FOR_NEXT_7_DAYS_BY_COURSE = gql`
+  query getSchedulesForNext7DaysByCourse($courseId: String!) {
+    getSchedulesForNext7DaysByCourse(courseId: $courseId) {
+      code
+      message
+      data {
+        id
+        schoolDay
+        startTime
+        endTime
+      }
+      pageInfo {
+        total
+      }
+    }
+  }
+`

@@ -31,3 +31,32 @@ export const GET_CARD_RECORDS_FOR_H5 = gql`
     }
   }
 `
+export const GET_VALID_CARD_RECORDS_BY_COURSE = gql`
+  query getValidCardRecordsByCourse($courseId: String!) {
+    getValidCardRecordsByCourse(courseId: $courseId) {
+      code
+      message
+      pageInfo {
+        total
+      }
+      data {
+        id
+        startTime
+        endTime
+        buyTime
+        remainTime
+        status
+        card {
+          id
+          name
+          type
+          validateDay
+        }
+        store {
+          id
+          name
+        }
+      }
+    }
+  }
+`

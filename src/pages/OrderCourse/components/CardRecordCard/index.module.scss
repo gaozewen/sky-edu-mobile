@@ -1,0 +1,17 @@
+.container {
+  padding: 8px;
+  font-size: 14px;
+
+  .top {
+    width: 100%;
+
+    .name {
+      margin-left: 5px;
+    }
+  }
+
+  .bottom {
+    width: 100%;
+    margin-top: 10px;
+  }
+}

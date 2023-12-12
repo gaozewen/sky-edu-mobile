@@ -196,6 +196,12 @@ export type TCardRecordQuery = {
     code: number
     message: string
   }
+  getValidCardRecordsByCourse: {
+    pageInfo: IPageInfo
+    data: ICardRecord[]
+    code: number
+    message: string
+  }
 }
 
 export interface ITeacher {
@@ -212,6 +218,7 @@ export interface ISchedule {
   id: string
   startTime: string
   endTime: string
+  schoolDay: string
   limitNumber: number
   course: ICourse
   store: IStore
@@ -222,6 +229,12 @@ export type TScheduleQuery = {
   getCanOrderedCoursesGroupByStore: {
     pageInfo: IPageInfo
     data: IStore[]
+    code: number
+    message: string
+  }
+  getSchedulesForNext7DaysByCourse: {
+    pageInfo: IPageInfo
+    data: ISchedule[]
     code: number
     message: string
   }
