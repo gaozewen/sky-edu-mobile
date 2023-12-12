@@ -3,9 +3,14 @@ import dayjs from 'dayjs'
 import { useEffect, useMemo, useState } from 'react'
 
 import { WEEK } from '@/constants'
+import { SUCCESS } from '@/constants/code'
 import { Week } from '@/enum'
 import { useGetValidCardRecordsByCourseService } from '@/service/card-record'
-import { useGetSchedulesForNext7DaysByCourseService } from '@/service/schedule'
+import {
+  useGetSchedulesForNext7DaysByCourseService,
+  useOrderCourseService,
+} from '@/service/schedule'
+import SkyToast from '@/utils/skyToast'
 
 import CardRecordCard from '../CardRecordCard'
 import styles from './index.module.scss'
@@ -24,8 +29,15 @@ const OrderPopup = ({ show, setShow, id }: IProps) => {
     useGetSchedulesForNext7DaysByCourseService()
   const { getValidCardRecordsByCourse, data: cardRecords } =
     useGetValidCardRecordsByCourseService()
+  const { orderCourse, loading } = useOrderCourseService()
   const [selectedSchedules, setSelectedSchedules] = useState<string[]>([])
   const [selectedCardRecords, setSelectedCardRecords] = useState<string[]>([])
+
+  const onClose = () => {
+    setSelectedSchedules([])
+    setSelectedCardRecords([])
+    setShow(false)
+  }
 
   useEffect(() => {
     if (show && id) {
@@ -65,13 +77,32 @@ const OrderPopup = ({ show, setShow, id }: IProps) => {
     [cardRecords]
   )
 
+  const onOrderCourse = async () => {
+    if (selectedSchedules.length === 0 || selectedCardRecords.length === 0) {
+      SkyToast.show('请选择预约时间和消费卡')
+      return
+    }
+    try {
+      const res = await orderCourse(selectedSchedules[0], selectedCardRecords[0])
+      if (res?.code === SUCCESS) {
+        SkyToast.success(res?.message || '预约成功')
+        onClose()
+        return
+      }
+      SkyToast.show(res?.message || '预约失败')
+    } catch (error) {
+      SkyToast.show('预约失败，服务器忙请稍后再试')
+      console.error('【orderCourse】Error:', error)
+    }
+  }
+
   if (!data) return null
 
   return (
     <Popup
       visible={show}
-      onMaskClick={() => setShow(false)}
-      onClose={() => setShow(false)}
+      onMaskClick={onClose}
+      onClose={onClose}
       bodyStyle={{ height: '48vh', overflowY: 'scroll' }}
       position="bottom"
       showCloseButton
@@ -82,12 +113,9 @@ const OrderPopup = ({ show, setShow, id }: IProps) => {
           {weeks.map(w => (
             <Tabs.Tab key={w.weekValue} title={w.weekLabel}>
               <Selector
-                multiple
                 columns={3}
                 options={w.orderTimes || []}
-                onChange={(arr: string[], append) => {
-                  console.log('gzw===>arr', arr)
-                  console.log('gzw===>append', append)
+                onChange={(arr: string[]) => {
                   setSelectedSchedules(arr)
                 }}
                 value={selectedSchedules}
@@ -100,16 +128,19 @@ const OrderPopup = ({ show, setShow, id }: IProps) => {
         <Selector
           columns={1}
           options={cards || []}
-          onChange={(arr: string[], append) => {
-            console.log('gzw===>arr', arr)
-            console.log('gzw===>append', append)
+          onChange={(arr: string[]) => {
             setSelectedCardRecords(arr)
           }}
           value={selectedCardRecords}
         />
 
         <Divider />
-        <Button color="primary" className={styles.btn}>
+        <Button
+          loading={loading}
+          color="primary"
+          className={styles.btn}
+          onClick={onOrderCourse}
+        >
           立即预约
         </Button>
       </div>

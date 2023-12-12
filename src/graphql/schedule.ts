@@ -48,3 +48,12 @@ export const GET_SCHEDULES_FOR_NEXT_7_DAYS_BY_COURSE = gql`
     }
   }
 `
+
+export const ORDER_COURSE = gql`
+  mutation orderCourse($scheduleId: String!, $cardRecordId: String!) {
+    orderCourse(scheduleId: $scheduleId, cardRecordId: $cardRecordId) {
+      code
+      message
+    }
+  }
+`

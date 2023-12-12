@@ -239,3 +239,10 @@ export type TScheduleQuery = {
     message: string
   }
 }
+
+export type TScheduleMutation = {
+  orderCourse: {
+    code: number
+    message: string
+  }
+}
