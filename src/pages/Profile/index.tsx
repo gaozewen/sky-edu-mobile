@@ -7,6 +7,7 @@ import { COMMIT_STUDENT } from '@/graphql/student'
 import { useStudentContext } from '@/hooks/useStudentHooks'
 import { useUploadOSS } from '@/hooks/useUploadOSS'
 import { IStudent } from '@/types'
+import { ImgUtils } from '@/utils'
 import SkyToast from '@/utils/skyToast'
 
 import styles from './index.module.scss'
@@ -58,7 +59,14 @@ const Profile = () => {
   return (
     <div className={styles.container}>
       <div className={styles.logo}>
-        <img src={IMG.LOGO_TEXT} alt="" />
+        <img
+          src={ImgUtils.getThumb({
+            url: IMG.LOGO_TEXT,
+            w: 108,
+            h: 40,
+          })}
+          alt=""
+        />
       </div>
       <Form
         form={form}

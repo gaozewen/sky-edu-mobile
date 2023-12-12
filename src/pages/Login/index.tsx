@@ -9,6 +9,7 @@ import { IMG } from '@/constants/image'
 import { STUDENT_LOGIN } from '@/graphql/student'
 import { useStudentContext } from '@/hooks/useStudentHooks'
 import { PN } from '@/router'
+import { ImgUtils } from '@/utils'
 import SkyToast from '@/utils/skyToast'
 import { setToken } from '@/utils/userToken'
 
@@ -61,7 +62,14 @@ const Login = () => {
   return (
     <div className={styles.container}>
       <div className={styles.logo}>
-        <img src={IMG.LOGO} alt="" />
+        <img
+          src={ImgUtils.getThumb({
+            url: IMG.LOGO,
+            w: 229,
+            h: 184,
+          })}
+          alt=""
+        />
       </div>
       <Form
         layout="horizontal"

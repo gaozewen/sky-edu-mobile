@@ -7,6 +7,7 @@ import { IMG } from '@/constants/image'
 import { STUDENT_REGISTER } from '@/graphql/student'
 import { useGoTo } from '@/hooks/useGoTo'
 import { PN } from '@/router'
+import { ImgUtils } from '@/utils'
 import SkyToast from '@/utils/skyToast'
 
 import styles from './index.module.scss'
@@ -53,7 +54,14 @@ const Register = () => {
   return (
     <div className={styles.container}>
       <div className={styles.logo}>
-        <img src={IMG.LOGO} alt="" />
+        <img
+          src={ImgUtils.getThumb({
+            url: IMG.LOGO,
+            w: 229,
+            h: 184,
+          })}
+          alt=""
+        />
       </div>
       <Form
         form={form}

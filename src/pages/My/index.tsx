@@ -9,6 +9,7 @@ import { useGoTo } from '@/hooks/useGoTo'
 import { useLogout } from '@/hooks/useLogout'
 import { useStudentContext } from '@/hooks/useStudentHooks'
 import { PN } from '@/router'
+import { ImgUtils } from '@/utils'
 
 import styles from './index.module.scss'
 
@@ -24,7 +25,16 @@ const My = () => {
     <div className={styles.container}>
       <Grid columns={10} className={styles.card}>
         <Grid.Item span={3}>
-          <Image className={styles.avatar} src={store.avatar} alt="用户头像" />
+          <Image
+            className={styles.avatar}
+            src={ImgUtils.getThumb({
+              url: store.avatar,
+              w: 200,
+              h: 200,
+              isAvatar: true,
+            })}
+            alt="用户头像"
+          />
         </Grid.Item>
         <Grid.Item span={7}>
           <div className={styles.name}>{store.nickname || '天空学员'}</div>
