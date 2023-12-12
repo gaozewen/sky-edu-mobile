@@ -1,4 +1,4 @@
-import { CardRecordStatus, Week } from './enum'
+import { CardRecordStatus, ScheduleRecordStatus, Week } from './enum'
 
 interface IPayResult {
   quantity: number
@@ -242,6 +242,32 @@ export type TScheduleQuery = {
 
 export type TScheduleMutation = {
   orderCourse: {
+    code: number
+    message: string
+  }
+}
+
+export interface IScheduleRecord {
+  id: string
+  status: ScheduleRecordStatus
+  student: IStudent
+  cardRecord: ICardRecord
+  schedule: ISchedule
+  course: ICourse
+  store: IStore
+}
+
+export type TScheduleRecordQuery = {
+  getScheduleRecords: {
+    pageInfo: IPageInfo
+    data: IScheduleRecord[]
+    code: number
+    message: string
+  }
+}
+
+export type TScheduleRecordMutation = {
+  cancelOrderCourse: {
     code: number
     message: string
   }

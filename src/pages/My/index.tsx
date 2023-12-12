@@ -55,7 +55,7 @@ const My = () => {
         </List.Item>
         <List.Item
           prefix={<UnorderedListOutline />}
-          onClick={() => goTo({ pathname: PN.MY_COURSE })}
+          onClick={() => goTo({ pathname: PN.MY_SCHEDULE })}
         >
           我的课程表
         </List.Item>

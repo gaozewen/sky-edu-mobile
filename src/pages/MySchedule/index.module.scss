@@ -1,0 +1,15 @@
+.container {
+  .logo {
+    width: 18px;
+    margin-top: 3px;
+    border: solid 2px var(--adm-color-primary);
+    border-radius: 50%;
+  }
+
+  .store-name {
+    height: 28px;
+    font-size: 14px;
+    line-height: 20px;
+    color: #4a4949;
+  }
+}

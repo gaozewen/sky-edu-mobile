@@ -7,7 +7,7 @@ import Home from '@/pages/Home'
 import Login from '@/pages/Login'
 import My from '@/pages/My'
 import MyCard from '@/pages/MyCard'
-import MyCourse from '@/pages/MyCourse'
+import MySchedule from '@/pages/MySchedule'
 import OrderCourse from '@/pages/OrderCourse'
 import PayFail from '@/pages/PayFail'
 import PaySuccess from '@/pages/PaySuccess'
@@ -29,7 +29,7 @@ export const PN = {
   PAY_FAIL: '/pay-fail',
   PROFILE: '/profile',
   ORDER_COURSE: '/order-course',
-  MY_COURSE: '/my-course',
+  MY_SCHEDULE: '/my-schedule',
   MY_CARD: '/my-card',
 }
 
@@ -99,9 +99,9 @@ const ALL_ROUTE: AllRouteType = {
     path: '/order-course',
     name: '预约课程',
   },
-  [PN.MY_COURSE]: {
-    key: PN.MY_COURSE,
-    path: '/my-course',
+  [PN.MY_SCHEDULE]: {
+    key: PN.MY_SCHEDULE,
+    path: '/my-schedule',
     name: '我的课程表',
   },
   [PN.MY_CARD]: {
@@ -165,8 +165,8 @@ export const router = createBrowserRouter([
             element: <OrderCourse />,
           },
           {
-            path: PN.MY_COURSE,
-            element: <MyCourse />,
+            path: PN.MY_SCHEDULE,
+            element: <MySchedule />,
           },
           {
             path: PN.MY_CARD,
@@ -207,7 +207,7 @@ export const isNoTabBar = (route: AllRouteValueType) => {
     PN.PAY_FAIL,
     PN.PROFILE,
     PN.ORDER_COURSE,
-    PN.MY_COURSE,
+    PN.MY_SCHEDULE,
     PN.MY_CARD,
   ].includes(route.key)
 }
