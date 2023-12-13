@@ -1,7 +1,8 @@
 import react from '@vitejs/plugin-react'
 import path from 'path'
 import postCssPxToViewport from 'postcss-px-to-viewport'
-import { defineConfig } from 'vite'
+// import { defineConfig } from 'vite'
+import { defineConfig } from 'vitest/config'
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -40,5 +41,9 @@ export default defineConfig({
         }),
       ],
     },
+  },
+  test: {
+    environment: 'jsdom',
+    globals: true,
   },
 })

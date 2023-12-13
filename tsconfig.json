@@ -23,8 +23,11 @@
     // 配置别名
     "paths": {
       "@/*": ["./src/*"] // 添加路径别名
-    }
+    },
+
+    //配置类型
+    "types": ["vitest/globals"]
   },
-  "include": ["src"],
+  "include": ["src", "test"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
