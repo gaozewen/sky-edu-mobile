@@ -1,6 +1,8 @@
 import { ApolloClient, ApolloLink, from, HttpLink, InMemoryCache } from '@apollo/client'
 import { ErrorLink } from '@apollo/client/link/error'
 
+import { isLoginOrRegisterRouter } from '@/router'
+
 import SkyToast from './skyToast'
 import { getToken } from './userToken'
 
@@ -22,6 +24,7 @@ const authLink = new ApolloLink((operation, forward) => {
 
 // token 失效跳转交由 useLoadUserData 这个 hooks 来处理
 const errorLink = new ErrorLink(({ graphQLErrors = [], networkError }) => {
+  if (isLoginOrRegisterRouter(location.pathname)) return
   if (graphQLErrors[0]) {
     SkyToast.show('请求参数或返回的数据格式不正确')
     graphQLErrors?.forEach(gqlErr => {
