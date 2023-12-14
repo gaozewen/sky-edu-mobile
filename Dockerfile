@@ -4,7 +4,8 @@ FROM node:18 AS builder
 
 COPY package.json .
 COPY pnpm-lock.yaml .
-RUN npm i -g pnpm && pnpm i
+RUN npm config set registry https://registry.npmmirror.com && npm i -g pnpm
+RUN pnpm config set registry https://registry.npmmirror.com && pnpm i
 
 # 将项目所有文件拷贝到 node 容器中
 # 第一个 . 的意思，当前 Dockerfile 所在目录
