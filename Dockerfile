@@ -1,12 +1,16 @@
 # 容器的环境 node 18
 # As builder 多阶段构建
 FROM node:18 AS builder
+
+COPY package.json .
+COPY pnpm-lock.yaml .
+RUN npm i -g pnpm && pnpm i
+
 # 将项目所有文件拷贝到 node 容器中
 # 第一个 . 的意思，当前 Dockerfile 所在目录
 # 第二个 . 的意思，当前启动容器的根目录
 COPY . .
-
-RUN npm i -g pnpm && pnpm i && pnpm run build
+RUN pnpm run build
 
 FROM nginx:1.25.1
 
