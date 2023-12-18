@@ -2,6 +2,7 @@ import { useQuery } from '@apollo/client'
 import { nanoid } from 'nanoid'
 
 import { GET_UPLOAD_TOKEN } from '@/graphql/oss'
+import { ImgUtils } from '@/utils'
 
 export const useUploadOSS = () => {
   // 获取 uploadToken
@@ -14,7 +15,8 @@ export const useUploadOSS = () => {
     formData.append('token', uploadToken)
     formData.append('key', `images/${nanoid()}`)
     formData.append('accept', 'application/json') // 根据需求设置 accept 头部
-    formData.append('file', file)
+    const compressedFile = await ImgUtils.compressImage(file)
+    formData.append('file', compressedFile)
 
     try {
       const res = await fetch('https://up-cn-east-2.qiniup.com', {
