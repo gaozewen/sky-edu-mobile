@@ -1,3 +1,4 @@
+import legacy from '@vitejs/plugin-legacy'
 import react from '@vitejs/plugin-react'
 import path from 'path'
 import postCssPxToViewport from 'postcss-px-to-viewport'
@@ -12,7 +13,26 @@ export default defineConfig({
     open: true, // 自动打开浏览器
     cors: true, // 打开跨域
   },
-  plugins: [react(), splitVendorChunkPlugin()],
+  plugins: [
+    react(),
+    splitVendorChunkPlugin(),
+    // 传统浏览器可以通过插件 @vitejs/plugin-legacy 来支持，
+    // 它将自动生成传统版本的 chunk 及与其相对应 ES 语言特性方面的 polyfill。
+    // 兼容版的 chunk 只会在不支持原生 ESM 的浏览器中进行按需加载。
+    legacy({
+      targets: ['defaults'],
+    }),
+  ],
+  build: {
+    sourcemap: true,
+    rollupOptions: {
+      output: {
+        chunkFileNames: 'assets/js/[name]-[hash].js', //代码块文件名
+        entryFileNames: 'assets/js/[name]-[hash].js', //入口文件名
+        assetFileNames: 'assets/[ext]/[name]-[hash].[ext]', // 资源文件名
+      },
+    },
+  },
   resolve: {
     alias: [
       {

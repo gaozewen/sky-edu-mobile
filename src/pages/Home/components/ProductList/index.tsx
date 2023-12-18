@@ -25,7 +25,7 @@ const ProductList = ({ data, loading, onRefresh, loadMore, hasMore }: IProps) =>
   return (
     <div className={styles.container}>
       <PullToRefresh onRefresh={onRefresh}>
-        <Grid columns={2} gap={10}>
+        <Grid columns={2} gap={8}>
           {data.map(p => (
             <Grid.Item key={p.id}>
               <ProductCard data={p} />

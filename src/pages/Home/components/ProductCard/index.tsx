@@ -3,6 +3,7 @@ import { Image } from 'antd-mobile'
 import { useGoTo } from '@/hooks/useGoTo'
 import { PN } from '@/router'
 import { IProduct } from '@/types'
+import { ImgUtils } from '@/utils'
 
 import styles from './index.module.scss'
 
@@ -20,7 +21,16 @@ const ProductCard = ({ data }: IProps) => {
       className={styles.container}
       onClick={() => goTo({ pathname: `${PN.PRODUCT}/${data.id}` })}
     >
-      <Image className={styles.cover} src={data.coverUrl} />
+      <Image
+        lazy
+        className={styles.cover}
+        src={ImgUtils.getThumb({
+          url: data.coverUrl,
+          w: 320,
+          h: 180,
+        })}
+        alt="商品封面图"
+      />
       <div className={styles.info}>
         <div className={styles.name}>{data.name}</div>
         <div className={styles.store}>

@@ -1,11 +1,13 @@
 .container {
+  box-sizing: border-box;
+  width: 176px;
   overflow: hidden;
   background-color: #fff;
   border-radius: 10px;
   box-shadow: 4px 7px 5px 0 rgb(0, 0, 0, 0.1);
 
   .cover {
-    height: 88px;
+    height: 99px;
   }
 
   .info {

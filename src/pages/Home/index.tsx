@@ -57,13 +57,15 @@ const Home = () => {
   }
 
   return (
-    <div className={styles.container}>
-      <SearchBar
-        placeholder="搜索课程试试"
-        onSearch={onSearch}
-        onClear={() => onSearch('')}
-      />
-      <CateSelector onChange={onChange} />
+    <>
+      <div className={styles.container}>
+        <SearchBar
+          placeholder="搜索课程试试"
+          onSearch={onSearch}
+          onClear={() => onSearch('')}
+        />
+        <CateSelector onChange={onChange} />
+      </div>
       <ProductList
         data={data}
         loading={loading}
@@ -71,7 +73,7 @@ const Home = () => {
         loadMore={loadMore}
         hasMore={hasMore}
       />
-    </div>
+    </>
   )
 }
 
