@@ -56,7 +56,9 @@ jobs:
           key: ${{ secrets.SERVER_SSH_KEY }}
           script: |
             cd /root/study/${{ env.PROJECT_NAME }}
-            docker build -t ${{ env.PROJECT_NAME }}:${{ github.sha }} . || true
+            docker build --build-arg BUILD_MEMORY_LIMIT=512m \
+                         -t \
+                         ${{ env.PROJECT_NAME }}:${{ github.sha }} . || true
 
       - name: 运行新容器
         uses: appleboy/ssh-action@master
