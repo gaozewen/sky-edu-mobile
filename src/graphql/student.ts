@@ -5,6 +5,7 @@ export const STUDENT_REGISTER = gql`
     studentRegister(params: $params) {
       code
       message
+      data
     }
   }
 `

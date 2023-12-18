@@ -2,12 +2,11 @@ import { useMutation } from '@apollo/client'
 import { Button, Form, ImageUploader, Input } from 'antd-mobile'
 import { useEffect } from 'react'
 
-import { IMG } from '@/constants/image'
 import { COMMIT_STUDENT } from '@/graphql/student'
+import { useGoTo } from '@/hooks/useGoTo'
 import { useStudentContext } from '@/hooks/useStudentHooks'
 import { useUploadOSS } from '@/hooks/useUploadOSS'
 import { IStudent } from '@/types'
-import { ImgUtils } from '@/utils'
 import SkyToast from '@/utils/skyToast'
 
 import styles from './index.module.scss'
@@ -20,6 +19,7 @@ const Profile = () => {
   const [commitStudent] = useMutation(COMMIT_STUDENT)
   const [form] = Form.useForm()
   const { store } = useStudentContext()
+  const { goBack } = useGoTo()
 
   useEffect(() => {
     if (!store.tel) return
@@ -47,6 +47,11 @@ const Profile = () => {
       const { code, message } = res.data.commitStudent
       if (code === 200) {
         SkyToast.success(message)
+        // 更新用户数据
+        setTimeout(() => {
+          store.refetchHandler()
+          goBack()
+        }, 1000)
         return
       }
       SkyToast.error(message)
@@ -58,16 +63,6 @@ const Profile = () => {
 
   return (
     <div className={styles.container}>
-      <div className={styles.logo}>
-        <img
-          src={ImgUtils.getThumb({
-            url: IMG.LOGO_TEXT,
-            w: 108,
-            h: 40,
-          })}
-          alt=""
-        />
-      </div>
       <Form
         form={form}
         className={styles.form}

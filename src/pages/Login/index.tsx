@@ -129,7 +129,7 @@ const Login = () => {
 
       <div className={styles.bottom}>
         没有账号？去
-        <Link to={PN.REGISTER} className={styles.link}>
+        <Link to={`${PN.REGISTER}${location.search}`} className={styles.link}>
           注册
         </Link>
       </div>

@@ -190,6 +190,19 @@ export const isLoginOrRegisterRouter = (pathname: string) => {
   return [PN.LOGIN, PN.REGISTER].includes(pathname)
 }
 
+// 是否是需要登录的路由
+export const isNeedLoginRouter = (pathname: string) => {
+  return [
+    PN.BUY,
+    PN.PAY_SUCCESS,
+    PN.PAY_FAIL,
+    PN.PROFILE,
+    PN.ORDER_COURSE,
+    PN.MY_SCHEDULE,
+    PN.MY_CARD,
+  ].includes(`/${pathname.split('/')[1]}`)
+}
+
 // 是底部 TabBar 导航路由
 export const isTabBarRouter = (pathname: string) => {
   return [PN.HOME, PN.MY].includes(pathname)

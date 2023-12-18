@@ -20,7 +20,7 @@ const My = () => {
   const { store } = useStudentContext()
   const { goTo } = useGoTo()
   const { onLogout } = useLogout()
-
+  const isLogin = !!store.id
   return (
     <div className={styles.container}>
       <Grid columns={10} className={styles.card}>
@@ -40,9 +40,9 @@ const My = () => {
           <div className={styles.name}>{store.nickname || '天空学员'}</div>
           <div
             className={styles['to-edit']}
-            onClick={() => goTo({ pathname: PN.PROFILE })}
+            onClick={() => goTo({ pathname: isLogin ? PN.PROFILE : PN.LOGIN })}
           >
-            编辑资料
+            {isLogin ? '编辑资料' : '去登录'}
           </div>
         </Grid.Item>
       </Grid>
@@ -67,9 +67,11 @@ const My = () => {
         </List.Item>
       </List>
 
-      <a onClick={onLogout} className={styles.logout}>
-        退出登录
-      </a>
+      {isLogin && (
+        <a onClick={onLogout} className={styles.logout}>
+          退出登录
+        </a>
+      )}
     </div>
   )
 }

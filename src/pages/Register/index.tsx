@@ -5,10 +5,11 @@ import { Link } from 'react-router-dom'
 import { SUCCESS } from '@/constants/code'
 import { IMG } from '@/constants/image'
 import { STUDENT_REGISTER } from '@/graphql/student'
-import { useGoTo } from '@/hooks/useGoTo'
+import { useStudentContext } from '@/hooks/useStudentHooks'
 import { PN } from '@/router'
 import { ImgUtils } from '@/utils'
 import SkyToast from '@/utils/skyToast'
+import { setToken } from '@/utils/userToken'
 
 import styles from './index.module.scss'
 
@@ -23,7 +24,7 @@ interface IValue {
 const Register = () => {
   const [form] = Form.useForm()
   const [studentRegister, { loading }] = useMutation(STUDENT_REGISTER)
-  const { goTo } = useGoTo()
+  const { store } = useStudentContext()
 
   const onRegister = async (value: IValue) => {
     const { account, password } = value
@@ -36,12 +37,11 @@ const Register = () => {
           },
         },
       })
-      const { code, message } = res.data.studentRegister
+      const { code, message, data: token } = res.data.studentRegister
       if (code === SUCCESS) {
-        SkyToast.success('注册成功，请登录')
-        setTimeout(() => {
-          goTo({ pathname: PN.LOGIN, replace: true })
-        }, 1000)
+        setToken(token, true)
+        store.refetchHandler()
+        SkyToast.success('注册成功')
         return
       }
       SkyToast.error(message)
@@ -146,7 +146,7 @@ const Register = () => {
 
       <div className={styles.bottom}>
         有账号？去
-        <Link to={PN.LOGIN} className={styles.link}>
+        <Link to={`${PN.LOGIN}${location.search}`} className={styles.link}>
           登录
         </Link>
       </div>

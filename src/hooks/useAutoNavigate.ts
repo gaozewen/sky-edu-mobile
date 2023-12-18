@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useLocation, useSearchParams } from 'react-router-dom'
 
-import { isLoginOrRegisterRouter, PN } from '@/router'
+import { isLoginOrRegisterRouter, isNeedLoginRouter, PN } from '@/router'
 
 import { useGoTo } from './useGoTo'
 import { useStudentContext } from './useStudentHooks'
@@ -14,9 +14,6 @@ const useAutoNavigate = (loadingUserData: boolean) => {
   const { goTo } = useGoTo()
 
   useEffect(() => {
-    // console.log('gzw===>loadingUserData', loadingUserData)
-    // console.log('gzw===>store.tel', store.tel)
-    // console.log('gzw===>pathname', pathname)
     // 还在加载用户数据则不处理
     if (loadingUserData) return
 
@@ -25,24 +22,24 @@ const useAutoNavigate = (loadingUserData: boolean) => {
       // 如果当前路由是登录页时，跳转 orgUrl 页，否则跳转主页
       if (isLoginOrRegisterRouter(pathname)) {
         const orgUrlPathname = params.get('orgUrl')
-        // if (orgUrlPathname === PN.PASSWORD) {
-        //   // 如果是修改密码后的登录跳转，直接去首页
-        //   goTo({ pathname: PN.HOME })
-        //   return
-        // }
         goTo({ pathname: orgUrlPathname || PN.HOME })
+        return
       }
+      // 非登录页，不做任何处理
       return
     }
 
     // 未登录
-    // 如果当前路由是登录页，则不处理
-    if (isLoginOrRegisterRouter(pathname)) return
     // 如果当前路由需要登录，则自动跳转登录页
-    goTo({
-      pathname: PN.LOGIN,
-      search: `orgUrl=${pathname}`,
-    })
+    if (isNeedLoginRouter(pathname)) {
+      goTo({
+        pathname: PN.LOGIN,
+        search: `orgUrl=${pathname}`,
+        replace: true,
+      })
+      return
+    }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loadingUserData, store.tel, pathname])
 }

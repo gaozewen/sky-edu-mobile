@@ -1,11 +1,19 @@
 import './App.module.scss'
 
+import { ApolloProvider } from '@apollo/client'
 import { RouterProvider } from 'react-router-dom'
 
+import { useApollo } from './hooks/useApollo'
 import router from './router'
 
 function App() {
-  return <RouterProvider router={router}></RouterProvider>
+  const { apolloClient } = useApollo()
+
+  return (
+    <ApolloProvider client={apolloClient}>
+      <RouterProvider router={router}></RouterProvider>
+    </ApolloProvider>
+  )
 }
 
 export default App
