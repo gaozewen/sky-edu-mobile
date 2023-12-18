@@ -17,8 +17,8 @@ FROM nginx:1.25.1
 
 # 将 node 容器中的 /dist 目录下的所有文件，拷贝到 nginx 容器中的 /usr/share/nginx/html 目录下
 COPY --from=builder /dist /usr/share/nginx/html
-# 授予 logo.ico 文件读的权限
-RUN chmod a+r /usr/share/nginx/html/logo.ico
+# 授予 favicon.ico 文件读的权限
+RUN chmod a+r /usr/share/nginx/html/favicon.ico
 # 将 sky-edu-mobile 项目中的 nginx.conf 文件，
 # 拷贝到 nginx 容器中的 /etc/nginx/conf.d/ 目录下，
 # 并命名为 default.conf
