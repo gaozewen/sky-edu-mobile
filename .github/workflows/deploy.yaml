@@ -7,12 +7,6 @@ on:
 
 env:
   PROJECT_NAME: sky-edu-mobile
-  # 设置绿色
-  GREEN: $(tput setaf 2)
-  # 设置红色
-  RED: $(tput setaf 1)
-  # 重置颜色
-  RESET: $(tput sgr0)
 
 jobs:
   deploy:
@@ -33,7 +27,7 @@ jobs:
             echo "********* Delete Exist Image *********"
             docker images -a | grep "${{ env.PROJECT_NAME }}" | awk '{print $3}' | xargs docker rmi || true
             echo "********* Delete Success *********"
-            echo "${{ env.GREEN }}********* ALL CLEAR *********${{ env.RESET }}"
+            echo "********* ALL CLEAR *********"
 
       - name: 拉取最新镜像
         uses: appleboy/ssh-action@master
@@ -48,7 +42,7 @@ jobs:
                          swr.cn-east-3.myhuaweicloud.com
             echo "********* Start Pull Latest Image *********"
             docker pull swr.cn-east-3.myhuaweicloud.com/gaozewen/${{ env.PROJECT_NAME }}:v1
-            echo "${{ env.GREEN }}********* PULL SUCCESS *********${{ env.RESET }}"      
+            echo "********* PULL SUCCESS *********"      
 
       - name: 运行新容器
         uses: appleboy/ssh-action@master
@@ -62,4 +56,4 @@ jobs:
                        --name ${{ env.PROJECT_NAME }} \
                        -p 5174:80 \
                        swr.cn-east-3.myhuaweicloud.com/gaozewen/${{ env.PROJECT_NAME }}:v1
-            echo "${{ env.GREEN }}********* 容器运行成功 *********${{ env.RESET }}"
+            echo "********* 容器运行成功 *********"
