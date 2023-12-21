@@ -18,10 +18,34 @@ const Home = () => {
   const { store, setStore } = useAppStoreContext()
   const { onGetProducts, loading, total } = useGetProductsService()
   const currentRef = useRef(1)
+  const isFirstRender = useRef(true)
   const { home } = store
   const data: IProduct[] = home[category] || []
 
   const hasMore = data.length < total
+
+  // 搜索内容改变时初始化列表数据
+  useEffect(() => {
+    if (!isFirstRender.current) {
+      init(true)
+    }
+  }, [name])
+
+  // home[category] 不存在，即还未被赋值时，初始化列表数据
+  useEffect(() => {
+    if (!isFirstRender.current) {
+      if (!home[category]) {
+        init()
+      }
+    }
+  }, [category])
+
+  // 进入页面初始化
+  useEffect(() => {
+    init(true)
+    // 一定要按顺序将空依赖 effect 放在最后
+    isFirstRender.current = false
+  }, [])
 
   const getProducts = async () => {
     const products = await onGetProducts({
@@ -32,14 +56,14 @@ const Home = () => {
     return products || []
   }
 
-  const init = async (isNameChange?: boolean) => {
+  const init = async (isClearOtherCategoryData?: boolean) => {
     currentRef.current = 1
     const products = await getProducts()
     setStore({
-      home: isNameChange
+      home: isClearOtherCategoryData
         ? {
             // 在 name 改变时清空 home store 中其他类型的列表数据, 以便于在切换 tab 时能 init 数据
-            [category]: data,
+            [category]: products,
           }
         : {
             ...home,
@@ -47,18 +71,6 @@ const Home = () => {
           },
     })
   }
-
-  // 搜索内容改变时初始化列表数据
-  useEffect(() => {
-    init(true)
-  }, [name])
-
-  // home[category] 不存在，即还未被赋值时，初始化列表数据
-  useEffect(() => {
-    if (!home[category]) {
-      init()
-    }
-  }, [category])
 
   const onSearch = (val: string) => {
     setName(val)
