@@ -18,18 +18,18 @@ const CourseInfo = ({ data }: IProps) => {
       {data?.map(c => (
         <div key={c.id} className={styles.container}>
           <div className={styles['card-name']}>{c.cardName}</div>
-          <div className={styles.desc}>{c.desc}</div>
+          <pre className={styles.desc}>{c.desc}</pre>
           <Hr />
           <div className={styles.title}>预约信息</div>
-          <div className={styles.desc}>{c.reserveInfo}</div>
+          <pre className={styles.desc}>{c.reserveInfo}</pre>
           <Hr />
           <div className={styles.title}>退款信息</div>
-          <div className={styles.desc}>{c.refundInfo}</div>
+          <pre className={styles.desc}>{c.refundInfo}</pre>
           {!!c.otherInfo && (
             <>
               <Hr />
               <div className={styles.title}>其他信息</div>
-              <div className={styles.desc}>{c.otherInfo}</div>
+              <pre className={styles.desc}>{c.otherInfo}</pre>
             </>
           )}
         </div>
