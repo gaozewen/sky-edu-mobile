@@ -2,8 +2,8 @@ import { NumberKeyboard, PasscodeInput, Popup } from 'antd-mobile'
 import { useState } from 'react'
 
 import { SUCCESS } from '@/constants/code'
+import { useAppStoreContext } from '@/hooks/useAppStore'
 import { useGoTo } from '@/hooks/useGoTo'
-import { useStudentContext } from '@/hooks/useStudentHooks'
 import { PN } from '@/router'
 import { useMockWxPayService } from '@/service/order'
 import { IPayResult } from '@/types'
@@ -20,7 +20,7 @@ interface IProps {
  * 模拟微信支付
  */
 const MockWxPay = ({ visible, setVisible }: IProps) => {
-  const { store } = useStudentContext()
+  const { store } = useAppStoreContext()
   const { payResult = {} } = store
   const { productId, quantity, price } = payResult as IPayResult
 

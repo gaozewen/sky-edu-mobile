@@ -2,8 +2,8 @@ import { ResultPage } from 'antd-mobile'
 import { AlipayCircleFill } from 'antd-mobile-icons'
 
 import { IS_MOCK_PAY } from '@/constants'
+import { useAppStoreContext } from '@/hooks/useAppStore'
 import { useGoTo } from '@/hooks/useGoTo'
-import { useStudentContext } from '@/hooks/useStudentHooks'
 import { PN } from '@/router'
 
 /**
@@ -11,7 +11,7 @@ import { PN } from '@/router'
  */
 const PayFail = () => {
   const { goTo } = useGoTo()
-  const { store } = useStudentContext()
+  const { store } = useAppStoreContext()
   const { payResult } = store
   const { price, storeName, rePay } = payResult || {}
   return (

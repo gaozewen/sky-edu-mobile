@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom'
 import { SUCCESS } from '@/constants/code'
 import { IMG } from '@/constants/image'
 import { STUDENT_LOGIN } from '@/graphql/student'
-import { useStudentContext } from '@/hooks/useStudentHooks'
+import { useAppStoreContext } from '@/hooks/useAppStore'
 import { PN } from '@/router'
 import { ImgUtils } from '@/utils'
 import SkyToast from '@/utils/skyToast'
@@ -26,7 +26,7 @@ interface IValue {
 const Login = () => {
   const [visible, setVisible] = useState(false)
   const [studentLogin, { loading, client }] = useMutation(STUDENT_LOGIN)
-  const { store: studentStore } = useStudentContext()
+  const { store: studentStore } = useAppStoreContext()
 
   const onLogin = async (value: IValue) => {
     const { account, password } = value
@@ -47,7 +47,7 @@ const Login = () => {
         // 原因是：由于 StudentInfoLayout 是所有页面的 layout，所以当登录成功跳转其他页面后
         // StudentInfoLayout 组件不会重新渲染，所以也不会加载获取用户信息的请求
         // 所以需要们手动触发
-        studentStore.refetchHandler()
+        studentStore.refetchUser()
         // 路由跳转交由 useAutoNavigate 统一控制
         SkyToast.success(message)
         return

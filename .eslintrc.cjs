@@ -20,6 +20,7 @@ module.exports = {
     // 使用单引号
     quotes: ['error', 'single'],
     '@typescript-eslint/no-explicit-any': 0,
+    'react/display-name': 0,
   },
   settings: {
     react: {

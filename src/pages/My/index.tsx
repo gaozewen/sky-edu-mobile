@@ -5,9 +5,9 @@ import {
   UnorderedListOutline,
 } from 'antd-mobile-icons'
 
+import { useAppStoreContext } from '@/hooks/useAppStore'
 import { useGoTo } from '@/hooks/useGoTo'
 import { useLogout } from '@/hooks/useLogout'
-import { useStudentContext } from '@/hooks/useStudentHooks'
 import { PN } from '@/router'
 import { ImgUtils } from '@/utils'
 
@@ -17,10 +17,11 @@ import styles from './index.module.scss'
  * 我的
  */
 const My = () => {
-  const { store } = useStudentContext()
+  const { store } = useAppStoreContext()
+  const { user } = store
   const { goTo } = useGoTo()
   const { onLogout } = useLogout()
-  const isLogin = !!store.id
+  const isLogin = !!user.id
   return (
     <div className={styles.container}>
       <Grid columns={10} className={styles.card}>
@@ -28,7 +29,7 @@ const My = () => {
           <Image
             className={styles.avatar}
             src={ImgUtils.getThumb({
-              url: store.avatar,
+              url: user.avatar,
               w: 200,
               h: 200,
               isAvatar: true,
@@ -37,7 +38,7 @@ const My = () => {
           />
         </Grid.Item>
         <Grid.Item span={7}>
-          <div className={styles.name}>{store.nickname || '天空学员'}</div>
+          <div className={styles.name}>{user.nickname || '天空学员'}</div>
           <div
             className={styles['to-edit']}
             onClick={() => goTo({ pathname: isLogin ? PN.PROFILE : PN.LOGIN })}

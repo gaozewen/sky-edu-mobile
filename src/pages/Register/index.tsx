@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 import { SUCCESS } from '@/constants/code'
 import { IMG } from '@/constants/image'
 import { STUDENT_REGISTER } from '@/graphql/student'
-import { useStudentContext } from '@/hooks/useStudentHooks'
+import { useAppStoreContext } from '@/hooks/useAppStore'
 import { PN } from '@/router'
 import { ImgUtils } from '@/utils'
 import SkyToast from '@/utils/skyToast'
@@ -24,7 +24,7 @@ interface IValue {
 const Register = () => {
   const [form] = Form.useForm()
   const [studentRegister, { loading }] = useMutation(STUDENT_REGISTER)
-  const { store } = useStudentContext()
+  const { store } = useAppStoreContext()
 
   const onRegister = async (value: IValue) => {
     const { account, password } = value
@@ -40,7 +40,7 @@ const Register = () => {
       const { code, message, data: token } = res.data.studentRegister
       if (code === SUCCESS) {
         setToken(token, true)
-        store.refetchHandler()
+        store.refetchUser()
         SkyToast.success('注册成功')
         return
       }

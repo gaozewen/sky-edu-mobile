@@ -3,14 +3,15 @@ import { useLocation, useSearchParams } from 'react-router-dom'
 
 import { isLoginOrRegisterRouter, isNeedLoginRouter, PN } from '@/router'
 
+import { useAppStoreContext } from './useAppStore'
 import { useGoTo } from './useGoTo'
-import { useStudentContext } from './useStudentHooks'
 
 // 根据不同情况处理当前页面路由的自动跳转
 const useAutoNavigate = (loadingUserData: boolean) => {
   const { pathname } = useLocation()
   const [params] = useSearchParams()
-  const { store } = useStudentContext()
+  const { store } = useAppStoreContext()
+  const { user } = store
   const { goTo } = useGoTo()
 
   useEffect(() => {
@@ -18,7 +19,7 @@ const useAutoNavigate = (loadingUserData: boolean) => {
     if (loadingUserData) return
 
     // 已登陆
-    if (store.id) {
+    if (user.id) {
       // 如果当前路由是登录页时，跳转 orgUrl 页，否则跳转主页
       if (isLoginOrRegisterRouter(pathname)) {
         const orgUrlPathname = params.get('orgUrl')
@@ -41,7 +42,7 @@ const useAutoNavigate = (loadingUserData: boolean) => {
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [loadingUserData, store.tel, pathname])
+  }, [loadingUserData, user.tel, pathname])
 }
 
 export default useAutoNavigate

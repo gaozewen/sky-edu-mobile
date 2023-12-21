@@ -1,13 +1,13 @@
 import { removeToken } from '@/utils/userToken'
 
-import { useStudentContext } from './useStudentHooks'
+import { useAppStoreContext } from './useAppStore'
 
 export const useLogout = () => {
-  const { store: studentStore } = useStudentContext()
+  const { store: studentStore } = useAppStoreContext()
 
   const onLogout = () => {
     removeToken()
-    studentStore.refetchHandler()
+    studentStore.refetchUser()
   }
 
   return { onLogout }

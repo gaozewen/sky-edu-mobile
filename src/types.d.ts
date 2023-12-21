@@ -10,15 +10,23 @@ interface IPayResult {
   rePay?: () => void
 }
 
+export interface IAppStore {
+  user: IStudent
+  refetchUser: () => void
+  payResult?: IPayResult
+  home: {
+    // 用于存放首页每个 tab 的数据
+    // "frontend": {...}
+    [key: string]: IProduct[]
+  }
+}
+
 export interface IStudent {
   id: string
   tel: string
   nickname: string
   avatar: string
   wxOpenid: string
-  refetchHandler: () => void
-  currentOrg?: string
-  payResult?: IPayResult
 }
 
 export interface IPageInfo {

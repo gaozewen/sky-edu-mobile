@@ -1,8 +1,8 @@
 import { Card, ResultPage } from 'antd-mobile'
 import { AlipayCircleFill } from 'antd-mobile-icons'
 
+import { useAppStoreContext } from '@/hooks/useAppStore'
 import { useGoTo } from '@/hooks/useGoTo'
-import { useStudentContext } from '@/hooks/useStudentHooks'
 import { PN } from '@/router'
 
 /**
@@ -10,7 +10,7 @@ import { PN } from '@/router'
  */
 const PaySuccess = () => {
   const { goTo } = useGoTo()
-  const { store } = useStudentContext()
+  const { store } = useAppStoreContext()
   const { payResult } = store
   const { price, storeName, productName, productDesc } = payResult || {}
   return (

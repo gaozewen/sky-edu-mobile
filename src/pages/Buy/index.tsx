@@ -5,8 +5,8 @@ import { useParams } from 'react-router-dom'
 
 import Hr from '@/components/Hr'
 import { IS_MOCK_PAY } from '@/constants'
+import { useAppStoreContext } from '@/hooks/useAppStore'
 import { useGoTo } from '@/hooks/useGoTo'
-import { useStudentContext } from '@/hooks/useStudentHooks'
 import { PN } from '@/router'
 import { useGetWxPayConfigService } from '@/service/order'
 import { useGetProductService } from '@/service/product'
@@ -24,7 +24,8 @@ const Buy = () => {
   const { id = '' } = useParams()
   const { data } = useGetProductService(id)
   const [count, setCount] = useState<number>(1)
-  const { store, setStore } = useStudentContext()
+  const { store, setStore } = useAppStoreContext()
+  const { user } = store
   const { getWxPayConfig } = useGetWxPayConfigService()
   const { goTo } = useGoTo()
 
@@ -33,7 +34,10 @@ const Buy = () => {
   useEffect(() => {
     if (IS_MOCK_PAY) {
       setStore({
-        wxOpenid: nanoid(),
+        user: {
+          ...user,
+          wxOpenid: nanoid(),
+        },
       })
     }
   }, [])
@@ -42,7 +46,10 @@ const Buy = () => {
 
   const setPayResult = () => {
     setStore({
-      wxOpenid: nanoid(),
+      user: {
+        ...user,
+        wxOpenid: nanoid(),
+      },
       payResult: {
         quantity: count,
         productId: data.id,
@@ -89,9 +96,9 @@ const Buy = () => {
       return
     }
     // openid 不存在
-    if (!store.wxOpenid) {
+    if (!user.wxOpenid) {
       window.location.href = `${import.meta.env.VITE_API_URL}/wx/login?userId=${
-        store.id
+        user.id
       }&url=${window.location.href}`
       return
     }
@@ -128,7 +135,7 @@ const Buy = () => {
       <Hr />
       <div className={styles.user}>
         <span className={styles['tel-label']}>手机号</span>
-        <span className={styles.tel}>{store.tel}</span>
+        <span className={styles.tel}>{user.tel}</span>
       </div>
       <Grid columns={2} className={styles['buy-container']}>
         <Grid.Item span={1}>
@@ -137,7 +144,7 @@ const Buy = () => {
         </Grid.Item>
         <Grid.Item span={1}>
           <Button className={styles.submit} onClick={onBuyHandler} shape="rectangular">
-            {store.wxOpenid ? '去支付' : '去微信授权'}
+            {IS_MOCK_PAY ? '去支付' : user.wxOpenid ? '去支付' : '去微信授权'}
           </Button>
         </Grid.Item>
       </Grid>

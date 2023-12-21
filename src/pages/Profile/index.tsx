@@ -3,8 +3,8 @@ import { Button, Form, ImageUploader, Input } from 'antd-mobile'
 import { useEffect } from 'react'
 
 import { COMMIT_STUDENT } from '@/graphql/student'
+import { useAppStoreContext } from '@/hooks/useAppStore'
 import { useGoTo } from '@/hooks/useGoTo'
-import { useStudentContext } from '@/hooks/useStudentHooks'
 import { useUploadOSS } from '@/hooks/useUploadOSS'
 import { IStudent } from '@/types'
 import SkyToast from '@/utils/skyToast'
@@ -18,17 +18,18 @@ const Profile = () => {
   const { uploadHandler } = useUploadOSS()
   const [commitStudent] = useMutation(COMMIT_STUDENT)
   const [form] = Form.useForm()
-  const { store } = useStudentContext()
+  const { store } = useAppStoreContext()
+  const { user } = store
   const { goBack } = useGoTo()
 
   useEffect(() => {
-    if (!store.tel) return
+    if (!user.tel) return
     form.setFieldsValue({
-      tel: store.tel,
-      nickname: store.nickname,
+      tel: user.tel,
+      nickname: user.nickname,
       avatar: [
         {
-          url: store.avatar,
+          url: user.avatar,
         },
       ],
     })
@@ -49,7 +50,7 @@ const Profile = () => {
         SkyToast.success(message)
         // 更新用户数据
         setTimeout(() => {
-          store.refetchHandler()
+          store.refetchUser()
           goBack()
         }, 1000)
         return
