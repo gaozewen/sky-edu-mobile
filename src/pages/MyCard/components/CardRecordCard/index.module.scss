@@ -41,13 +41,24 @@
   .top {
     width: 100%;
     font-size: 14px;
-
-    .name {
-      margin-left: 5px;
+    .left {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      .name {
+        width: 58vw;
+        margin-left: 5px;
+      }
     }
   }
 
   .bottom {
+    .store-name {
+      width: 48vw;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      text-wrap: nowrap;
+    }
     width: 100%;
     margin-top: 10px;
   }
