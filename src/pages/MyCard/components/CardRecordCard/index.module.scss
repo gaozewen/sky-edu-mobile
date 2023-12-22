@@ -53,13 +53,13 @@
   }
 
   .bottom {
+    width: 100%;
+    margin-top: 10px;
     .store-name {
       width: 48vw;
       overflow: hidden;
       text-overflow: ellipsis;
       text-wrap: nowrap;
     }
-    width: 100%;
-    margin-top: 10px;
   }
 }

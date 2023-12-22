@@ -32,10 +32,10 @@ const PayFail = () => {
           bold: true,
         },
       ]}
-      primaryButtonText="重新支付"
+      primaryButtonText={IS_MOCK_PAY ? '返回首页' : '重新支付'}
       onPrimaryButtonClick={() => {
         if (IS_MOCK_PAY) {
-          goTo({ pathname: PN.PAY_SUCCESS })
+          goTo({ pathname: PN.HOME })
           return
         }
         if (rePay && typeof rePay === 'function') {
