@@ -1,7 +1,6 @@
-import { Button, Image, List } from 'antd-mobile'
+import { Avatar, Button, Card, Grid } from 'antd-mobile'
 
 import { ICourse } from '@/types'
-import { ImgUtils } from '@/utils'
 
 import styles from './index.module.scss'
 
@@ -16,24 +15,25 @@ interface IProps {
 const CourseList = ({ data, onOrder }: IProps) => {
   return (
     <div className={styles.container}>
-      <List>
-        {data.map(course => (
-          <List.Item
-            key={course.id}
-            prefix={
-              <Image
-                className={styles.cover}
-                src={ImgUtils.getThumb({
-                  url: course.coverUrl,
-                  w: 200,
-                  h: 100,
-                })}
-                alt="课程图片"
+      {data.map(course => (
+        <Card key={course.id} className={styles.card}>
+          <div className={styles['store-name']}>{course.name}</div>
+          <Grid columns={13} gap={10}>
+            <Grid.Item span={2}>
+              <Avatar
+                src={((course.teachers || [])[0] || {}).avatar}
+                style={{ width: '40px', height: '40px' }}
               />
-            }
-            description={course.teachers?.map(t => t.nickname).join(',')}
-            extra={
+            </Grid.Item>
+            <Grid.Item span={8}>
+              <div className={styles.teacher}>
+                讲师：
+                {((course.teachers || [])[0] || {}).nickname || '未知'}
+              </div>
+            </Grid.Item>
+            <Grid.Item span={3}>
               <Button
+                style={{ marginTop: '2px' }}
                 fill="none"
                 color="primary"
                 onClick={() => {
@@ -42,12 +42,10 @@ const CourseList = ({ data, onOrder }: IProps) => {
               >
                 预约
               </Button>
-            }
-          >
-            {course.name}
-          </List.Item>
-        ))}
-      </List>
+            </Grid.Item>
+          </Grid>
+        </Card>
+      ))}
     </div>
   )
 }

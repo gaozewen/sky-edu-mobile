@@ -24,6 +24,7 @@ export const GET_CAN_ORDERED_COURSES_GROUP_BY_STORE = gql`
           teachers {
             id
             nickname
+            avatar
           }
         }
       }

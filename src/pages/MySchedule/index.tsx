@@ -1,9 +1,9 @@
 import {
+  Avatar,
   Button,
   Card,
   ErrorBlock,
   Grid,
-  Image,
   InfiniteScroll,
   Modal,
   PullToRefresh,
@@ -129,7 +129,7 @@ const MySchedule = () => {
               }
               title={
                 <Space justify="between" block>
-                  <span>
+                  <span className={styles.time}>
                     {dayjs(sr.schedule.schoolDay).format(DAY_FORMAT)}
                     &nbsp;
                     {sr.schedule.startTime}-{sr.schedule.endTime}
@@ -141,32 +141,31 @@ const MySchedule = () => {
               }
               description={
                 <Card>
+                  <div className={styles['store-name']}>{sr.course.name}</div>
                   <Grid columns={13} gap={10}>
-                    <Grid.Item span={4}>
-                      <Image
-                        src={ImgUtils.getThumb({
-                          url: sr.course.coverUrl,
-                          w: 200,
-                          h: 100,
-                        })}
-                        alt="课程封面"
+                    <Grid.Item span={2}>
+                      <Avatar
+                        src={sr.schedule.teacher.avatar}
+                        style={{ width: '40px', height: '40px' }}
                       />
                     </Grid.Item>
-                    <Grid.Item span={6}>
-                      <div className={styles['store-name']}>{sr.course.name}</div>
+                    <Grid.Item span={8}>
                       <div className={styles.teacher}>
-                        老师：{sr.schedule.teacher.nickname}
+                        讲师：
+                        {sr.schedule.teacher.nickname}
                       </div>
                     </Grid.Item>
                     <Grid.Item span={3}>
                       {sr.status === ScheduleRecordStatus.PENDING && (
                         <Button
+                          style={{ marginTop: '6px' }}
                           loading={cancelLoading}
                           fill="none"
                           color="primary"
                           onClick={() => {
                             onCancelOrder(sr.id)
                           }}
+                          size="small"
                         >
                           取消
                         </Button>

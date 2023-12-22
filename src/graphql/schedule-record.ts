@@ -20,6 +20,7 @@ export const GET_SCHEDULE_RECORDS = gql`
           teacher {
             id
             nickname
+            avatar
           }
         }
         course {

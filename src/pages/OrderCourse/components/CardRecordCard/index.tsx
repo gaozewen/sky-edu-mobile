@@ -20,11 +20,11 @@ const CardRecordCard = ({ data }: IProps) => {
 
   return (
     <div className={styles.container}>
-      <Space justify="between" align="center" className={styles.top}>
-        <span>
+      <Space justify="between" align="start" className={styles.top}>
+        <div className={styles.left}>
           <BankcardOutline />
-          <span className={styles.name}>{data.card.name}</span>
-        </span>
+          <div className={styles.name}>{data.card.name}</div>
+        </div>
 
         {isTimeCard ? (
           <Tag color="warning" fill="outline">
@@ -38,8 +38,8 @@ const CardRecordCard = ({ data }: IProps) => {
       </Space>
 
       <Space justify="between" align="center" className={styles.bottom}>
-        <span>{data.store.name}</span>
-        <span>有效期至：{dayjs(data.endTime).format(DAY_FORMAT)}</span>
+        <div className={styles['store-name']}>{data.store.name}</div>
+        <div>有效期至：{dayjs(data.endTime).format(DAY_FORMAT)}</div>
       </Space>
     </div>
   )

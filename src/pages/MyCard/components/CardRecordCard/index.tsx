@@ -5,8 +5,6 @@ import dayjs from 'dayjs'
 
 import { DAY_FORMAT } from '@/constants'
 import { CardRecordStatus, CardType } from '@/enum'
-import { useGoTo } from '@/hooks/useGoTo'
-import { PN } from '@/router'
 import { ICardRecord } from '@/types'
 
 import styles from './index.module.scss'
@@ -19,7 +17,6 @@ interface IProps {
  * 消费卡记录卡片
  */
 const CardRecordCard = ({ data }: IProps) => {
-  const { goTo } = useGoTo()
   // 是否是次数卡
   const isTimeCard = data.card.type === CardType.TIME
   return (
@@ -29,7 +26,6 @@ const CardRecordCard = ({ data }: IProps) => {
         [styles.expired]: data.status === CardRecordStatus.EXPIRED,
         [styles.depleted]: data.status === CardRecordStatus.DEPLETED,
       })}
-      onClick={() => goTo({ pathname: `${PN.PRODUCT}/${data.id}` })}
     >
       <Space justify="between" align="start" className={styles.top}>
         <div className={styles.left}>

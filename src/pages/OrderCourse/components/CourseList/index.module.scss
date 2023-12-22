@@ -1,6 +1,18 @@
 .container {
-  .cover {
-    width: 80px;
-    border-radius: 2px;
+  .card {
+    margin-bottom: 18px;
+    border-radius: 4px;
+    box-shadow: 4px 7px 5px 0 rgb(0, 0, 0, 0.1);
+
+    .store-name {
+      margin-bottom: 4px;
+      font-size: 14px;
+      line-height: 20px;
+      color: #4a4949;
+    }
+    .teacher {
+      margin-left: 4px;
+      line-height: 40px;
+    }
   }
 }
