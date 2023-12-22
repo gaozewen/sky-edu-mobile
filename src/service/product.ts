@@ -48,10 +48,7 @@ export const useGetProductsService = () => {
     current?: number
     pageSize?: number
   }) => {
-    const isShowLoading = params.current && params.current > 1
-    if (isShowLoading) {
-      SkyToast.loading()
-    }
+    SkyToast.loading()
     const { longitude, latitude } = await getPosition()
     const res = await getProducts({
       variables: {
@@ -64,10 +61,8 @@ export const useGetProductsService = () => {
         longitude,
         latitude,
       },
-      onCompleted: () => {
-        if (isShowLoading) {
-          SkyToast.close()
-        }
+      onCompleted: async () => {
+        SkyToast.close()
       },
     })
     return res?.data?.getProductsForH5.data || []

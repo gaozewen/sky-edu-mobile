@@ -36,7 +36,9 @@ const PaySuccess = () => {
         goTo({ pathname: PN.HOME })
       }}
     >
-      <Card title={productName}>{productDesc}</Card>
+      <Card title={productName}>
+        <pre style={{ lineHeight: '20px' }}>{productDesc}</pre>
+      </Card>
     </ResultPage>
   )
 }
