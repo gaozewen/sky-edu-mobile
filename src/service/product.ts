@@ -7,7 +7,7 @@ import {
   GET_PRODUCTS_BY_STORE_ID_FOR_H5,
   GET_PRODUCTS_FOR_H5,
 } from '@/graphql/product'
-import { TProductQuery } from '@/types'
+import { IProduct, TProductQuery } from '@/types'
 import SkyToast from '@/utils/skyToast'
 
 export const useGetProductCategoriesService = () => {
@@ -39,15 +39,14 @@ const getPosition = () =>
   })
 
 export const useGetProductsService = () => {
-  const [getProducts, { loading, data }] =
-    useLazyQuery<TProductQuery>(GET_PRODUCTS_FOR_H5)
+  const [getProducts] = useLazyQuery<TProductQuery>(GET_PRODUCTS_FOR_H5)
 
   const onGetProducts = async (params: {
     name?: string
     category?: string
     current?: number
     pageSize?: number
-  }) => {
+  }): Promise<{ products: IProduct[]; total: number }> => {
     SkyToast.loading()
     const { longitude, latitude } = await getPosition()
     const res = await getProducts({
@@ -65,13 +64,15 @@ export const useGetProductsService = () => {
         SkyToast.close()
       },
     })
-    return res?.data?.getProductsForH5.data || []
+
+    return {
+      products: res?.data?.getProductsForH5.data || [],
+      total: res?.data?.getProductsForH5.pageInfo.total || 0,
+    }
   }
 
   return {
     onGetProducts,
-    loading,
-    total: data?.getProductsForH5.pageInfo.total || 0,
   }
 }
 

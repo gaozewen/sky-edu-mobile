@@ -7,7 +7,6 @@ import styles from './index.module.scss'
 
 interface IProps {
   data: IProduct[]
-  loading: boolean
   onRefresh: () => Promise<any>
   loadMore: () => Promise<any>
   hasMore: boolean
@@ -16,8 +15,7 @@ interface IProps {
 /**
  *  商品列表
  */
-const ProductList = ({ data, loading, onRefresh, loadMore, hasMore }: IProps) => {
-  if (loading) return null
+const ProductList = ({ data, onRefresh, loadMore, hasMore }: IProps) => {
   if (!data || data.length === 0) {
     return <ErrorBlock status="empty" style={{ marginTop: '18vh' }} />
   }

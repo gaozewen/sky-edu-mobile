@@ -17,7 +17,10 @@ export interface IAppStore {
   home: {
     // 用于存放首页每个 tab 的数据
     // "frontend": {...}
-    [key: string]: IProduct[]
+    [key: string]: {
+      products: IProduct[]
+      total: number
+    }
   }
 }
 

@@ -16,12 +16,12 @@ const Home = () => {
   const [name, setName] = useState('')
   const [category, setCategory] = useState('all')
   const { store, setStore } = useAppStoreContext()
-  const { onGetProducts, loading, total } = useGetProductsService()
+  const { onGetProducts } = useGetProductsService()
   const currentRef = useRef(1)
   const isFirstRender = useRef(true)
   const { home } = store
-  const data: IProduct[] = home[category] || []
-
+  const data: IProduct[] = home[category]?.products || []
+  const total: number = home[category]?.total || 0
   const hasMore = data.length < total
 
   // 搜索内容改变时初始化列表数据
@@ -48,26 +48,32 @@ const Home = () => {
   }, [])
 
   const getProducts = async () => {
-    const products = await onGetProducts({
+    const res = await onGetProducts({
       name,
       category: category === 'all' ? '' : category,
       current: currentRef.current,
     })
-    return products || []
+    return res
   }
 
   const init = async (isClearOtherCategoryData?: boolean) => {
     currentRef.current = 1
-    const products = await getProducts()
+    const { products, total: t } = await getProducts()
     setStore({
       home: isClearOtherCategoryData
         ? {
             // 在 name 改变时清空 home store 中其他类型的列表数据, 以便于在切换 tab 时能 init 数据
-            [category]: products,
+            [category]: {
+              products,
+              total: t,
+            },
           }
         : {
             ...home,
-            [category]: products,
+            [category]: {
+              products,
+              total: t,
+            },
           },
     })
   }
@@ -85,11 +91,14 @@ const Home = () => {
 
   const loadMore = async () => {
     currentRef.current += 1
-    const append = await getProducts()
+    const { products: append, total: t } = await getProducts()
     setStore({
       home: {
         ...home,
-        [category]: [...data, ...append],
+        [category]: {
+          products: [...data, ...append],
+          total: t,
+        },
       },
     })
   }
@@ -106,7 +115,6 @@ const Home = () => {
       </div>
       <ProductList
         data={data}
-        loading={loading}
         onRefresh={onRefresh}
         loadMore={loadMore}
         hasMore={hasMore}
