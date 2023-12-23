@@ -8,6 +8,7 @@ import Login from '@/pages/Login'
 import My from '@/pages/My'
 import MyCard from '@/pages/MyCard'
 import MySchedule from '@/pages/MySchedule'
+import NotFound from '@/pages/NotFound'
 import OrderCourse from '@/pages/OrderCourse'
 import PayFail from '@/pages/PayFail'
 import PaySuccess from '@/pages/PaySuccess'
@@ -181,6 +182,10 @@ export const router = createBrowserRouter([
       {
         path: PN.PAY_FAIL,
         element: <PayFail />,
+      },
+      {
+        path: '*',
+        element: <NotFound />,
       },
     ],
   },

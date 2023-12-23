@@ -23,7 +23,7 @@ const useAutoNavigate = (loadingUserData: boolean) => {
       // 如果当前路由是登录页时，跳转 orgUrl 页，否则跳转主页
       if (isLoginOrRegisterRouter(pathname)) {
         const orgUrlPathname = params.get('orgUrl')
-        goTo({ pathname: orgUrlPathname || PN.HOME })
+        goTo({ pathname: orgUrlPathname || PN.HOME, replace: true })
         return
       }
       // 非登录页，不做任何处理
